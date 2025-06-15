@@ -1,0 +1,11 @@
+#+TITLE: Ghostty
+#+STARTUP: showeverything noindent nonum align inlineimages showstars oddeven nohideblocks entitiespretty
+#+OPTIONS: author:t date:nil ^:{}
+
+* Ghostty
+
+The following one-liner will export the terminfo entry from your host and import it on the remote machine: ~infocmp -x | ssh YOUR-SERVER -- tic -x -~. 
+
+The ~tic~ command on the server may give the warning ="<stdin>", line 2, col 31, terminal 'xterm-ghostty': older tic versions may treat the description field as an alias= which can be safely ignored.
+
+The ~modus-vivendi~ theme is available at =https://github.com/anhsirk0/ghostty-themes/blob/main/themes/modus-vivendi=
