@@ -1,4 +1,3 @@
-#+TITLE: Ghostty
 #+STARTUP: showeverything noindent nonum align inlineimages showstars oddeven nohideblocks entitiespretty
 #+OPTIONS: author:t date:nil ^:{}
 

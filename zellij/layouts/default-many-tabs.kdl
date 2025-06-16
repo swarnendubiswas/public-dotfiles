@@ -1,0 +1,37 @@
+layout {
+    cwd "/home/swarnendu"
+    tab name="Emacs" focus=true hide_floating_panes=true {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane focus=true {
+            command "emacs" 
+            args "-nw"
+        }
+    }  
+    tab name="Tab #2" hide_floating_panes=true {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane focus=true
+    }
+    tab name="Tab #3" hide_floating_panes=true {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane focus=true
+    }  
+    tab name="Tab #4" hide_floating_panes=true {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane focus=true
+    }  
+    new_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane focus=true
+    }
+}
+

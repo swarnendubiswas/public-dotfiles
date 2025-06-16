@@ -1,0 +1,600 @@
+// My configuration is tailored to work with terminal Emacs. My favored terminal
+// emulators are Alacritty and Ghostty.
+keybinds clear-defaults=true {
+  // Conflicts with Emacs, so we use "Ctrl ]" which is difficult to bind in
+  // terminal Emacs
+  unbind "Ctrl g"
+  normal {
+    // Avoids having to move to scroll mode thereby reducing keystrokes
+    bind "PageDown" {
+      PageScrollDown
+    }
+    bind "PageUp" {
+      PageScrollUp
+    }
+    bind "Down" {
+      ScrollDown
+    }
+    bind "Up" {
+      ScrollUp
+    }
+    bind "Home" {
+      ScrollToTop
+    }
+    bind "End" {
+      ScrollToBottom
+    }
+    bind "Ctrl v" {
+      HalfPageScrollDown
+    }
+    bind "Alt v" {
+      HalfPageScrollUp
+    }
+  }
+  locked {
+    bind "Ctrl ]" {
+      SwitchToMode "Normal"
+    }
+  }
+  pane {
+    bind "Left" {
+      MoveFocus "Left"
+    }
+    bind "Down" {
+      MoveFocus "Down"
+    }
+    bind "Up" {
+      MoveFocus "Up"
+    }
+    bind "Right" {
+      MoveFocus "Right"
+    }
+    bind "tab" {
+      SwitchFocus
+    }
+    bind "Alt Right" {
+      NewPane "Right"
+    }
+    bind "Alt Down" {
+      NewPane "Down"
+    }
+    bind "x" {
+      CloseFocus
+      SwitchToMode "Locked"
+    }
+    // bind "f" { ToggleFocusFullscreen; SwitchToMode "Locked"; }
+    // bind "z" { TogglePaneFrames; SwitchToMode "Locked"; }
+    // bind "w" { ToggleFloatingPanes; SwitchToMode "Locked"; }
+    bind "r" {
+      SwitchToMode "RenamePane"
+      PaneNameInput 0
+    }
+  }
+  move {
+    bind "Tab" {
+      MovePane
+    }
+    bind "Left" {
+      MovePane "Left"
+    }
+    bind "Down" {
+      MovePane "Down"
+    }
+    bind "Up" {
+      MovePane "Up"
+    }
+    bind "Right" {
+      MovePane "Right"
+    }
+  }
+  tab {
+    bind "r" {
+      SwitchToMode "RenameTab"
+      TabNameInput 0
+    }
+    bind "Left" {
+      GoToPreviousTab
+    }
+    bind "Right" {
+      GoToNextTab
+    }
+    bind "n" {
+      NewTab
+      SwitchToMode "Locked"
+    }
+    bind "x" {
+      CloseTab
+      SwitchToMode "Locked"
+    }
+    // bind "s" { ToggleActiveSyncTab; SwitchToMode "Locked"; }
+    // bind "b" { BreakPane; SwitchToMode "Locked"; }
+    // bind "[" { BreakPaneRight; SwitchToMode "Locked"; }
+    bind "]" {
+      BreakPaneLeft
+      SwitchToMode "Locked"
+    }
+    bind "1" {
+      GoToTab 1
+      SwitchToMode "Locked"
+    }
+    bind "2" {
+      GoToTab 2
+      SwitchToMode "Locked"
+    }
+    bind "3" {
+      GoToTab 3
+      SwitchToMode "Locked"
+    }
+    bind "4" {
+      GoToTab 4
+      SwitchToMode "Locked"
+    }
+    bind "5" {
+      GoToTab 5
+      SwitchToMode "Locked"
+    }
+    bind "6" {
+      GoToTab 6
+      SwitchToMode "Locked"
+    }
+    bind "7" {
+      GoToTab 7
+      SwitchToMode "Locked"
+    }
+    bind "8" {
+      GoToTab 8
+      SwitchToMode "Locked"
+    }
+    bind "9" {
+      GoToTab 9
+      SwitchToMode "Locked"
+    }
+    bind "tab" {
+      ToggleTab
+    }
+  }
+  scroll {
+    // bind "e" { EditScrollback; SwitchToMode "Locked"; }
+    bind "s" {
+      SwitchToMode "EnterSearch"
+      SearchInput 0
+    }
+  }
+  search {
+    bind "n" {
+      Search "Down"
+    }
+    bind "p" {
+      Search "Up"
+    }
+    bind "c" {
+      SearchToggleOption "CaseSensitivity"
+    }
+    bind "w" {
+      SearchToggleOption "Wrap"
+    }
+    bind "o" {
+      SearchToggleOption "WholeWord"
+    }
+  }
+  entersearch {
+    bind "Esc" "Ctrl l" {
+      SwitchToMode "Scroll"
+    }
+    bind "Enter" {
+      SwitchToMode "Search"
+    }
+  }
+  renametab {
+    bind "Esc" {
+      UndoRenameTab
+      SwitchToMode "Tab"
+    }
+  }
+  renamepane {
+    bind "Esc" {
+      UndoRenamePane
+      SwitchToMode "Pane"
+    }
+  }
+  session {
+    bind "d" {
+      Detach
+    }
+    bind "w" {
+      LaunchOrFocusPlugin "session-manager" {
+        floating true
+        move_to_focused_tab true
+      }
+      SwitchToMode "Locked"
+    }
+ // bind "c" {
+    //   LaunchOrFocusPlugin "configuration" {
+    //     floating true
+    //     move_to_focused_tab true
+    //   }
+    //   SwitchToMode "Locked";
+    // }
+    // bind "p" {
+    //   LaunchOrFocusPlugin "plugin-manager" {
+    //     floating true
+    //     move_to_focused_tab true
+    //   };
+    //   SwitchToMode "Locked";
+    // }
+  }
+  shared {
+    // bind "Shift Right" "Ctrl Shift Right" "Ctrl Tab" { GoToNextTab; }
+    bind "Shift Right" {
+      GoToNextTab
+    }
+    // bind "Shift Left" "Ctrl Shift Left" "Ctrl Shift Tab" { GoToPreviousTab; }
+    bind "Shift Left" {
+      GoToPreviousTab
+    }
+ //   bind "Super 1" { GoToTab 1; }
+    //   bind "Super 2" { GoToTab 2; }
+    //   bind "Super 3" { GoToTab 3; }
+    //   bind "Super 4" { GoToTab 4; }
+    //   bind "Super 5" { GoToTab 5; }
+    //   bind "Super 6" { GoToTab 6; }
+    //   bind "Super 7" { GoToTab 7; }
+    //   bind "Super 8" { GoToTab 8; }
+    //   bind "Super 9" { GoToTab 9; }
+  }
+  shared_except "locked" {
+    bind "Ctrl ]" {
+      SwitchToMode "Locked"
+    }
+    // bind "Ctrl q" { Quit; }
+    // bind "Alt f" { ToggleFloatingPanes; }
+    bind "Alt n" {
+      NewPane
+    }
+    bind "Ctrl Alt ," {
+      MoveTab "Left"
+    }
+    bind "Ctrl Alt ." {
+      MoveTab "Right"
+    }
+    bind "Alt Left" {
+      MoveFocusOrTab "Left"
+      SwitchToMode "Locked"
+    }
+    // bind "Alt Left" { GoToPreviousTab; SwitchToMode "Locked"; }
+    bind "Alt Right" {
+      MoveFocusOrTab "Right"
+      SwitchToMode "Locked"
+    }
+    // bind "Alt Right" { GoToNextTab; SwitchToMode "Locked"; }
+    bind "Alt Down" {
+      MoveFocus "Down"
+      SwitchToMode "Locked"
+    }
+    bind "Alt Up" {
+      MoveFocus "Up"
+      SwitchToMode "Locked"
+    }
+    // bind "Alt [" { PreviousSwapLayout; }
+    // bind "Alt ]" { NextSwapLayout; }
+    // bind "Alt f" {
+    //   LaunchPlugin "filepicker" {
+    //     floating true
+    //     close_on_selection true
+    //   }
+    // }
+    bind "Alt q" "Ctrl q" {
+      LaunchOrFocusPlugin "zj-quit" {
+        floating true
+      }
+      SwitchToMode "Locked"
+    }
+    // Enables quick navigation to your favorite panes. a to add pane to list, A
+    // to add all current panes to list, Up and Down or j and k to cycle through
+    // pane list, d to remove pane from list, Enter or l to switch to the
+    // selected pane, Esc or Ctrl + c to exit
+    bind "Alt h" {
+      LaunchOrFocusPlugin "harpoon" {
+        floating true
+        move_to_focused_tab true
+      }
+      SwitchToMode "Locked"
+    }
+    bind "Alt z" {
+      LaunchOrFocusPlugin "zj-forgot" {
+        LOAD_ZELLIJ_BINDINGS "false"
+        floating true
+        move_to_focused_tab true
+        "[tab] New tab" "Ctrl + ] + Ctrl + t + n"
+        "[tab] Switch tab to the left" "Shift + Left || Ctrl + Shift + Left || Ctrl + Shift + Tab"
+        "[tab] Switch tab to the right" "Shift + Right || Ctrl + Shift + Right || Ctrl + Tab"
+        "[tab] Rename tab" "Ctrl + ] + Ctrl + t + r"
+        "[tab] Close tab" "Ctrl + ] + Ctrl + t + x"
+        "[tab] Move tab left" "Ctrl + ] + Ctrl + Alt + ."
+        "[tab] Move tab right" "Ctrl + ] + Ctrl + Alt + ,"
+        "[tab] Move focus or tab left" "Ctrl + ] + Alt + Left"
+        "[tab] Move focus or tab right" "Ctrl + ] + Alt + Right"
+        "[pane] New pane" "Ctrl + ] + Alt + n"
+        "[pane] New pane to the right" "Alt Right"
+        "[pane] New pane to the down" "Alt Down"
+        "[pane] Close pane or focus" "Ctrl + ] + Ctrl + p + x"
+        "[pane] Rename pane" ""
+        "[session] Open session manager" "Ctrl + ] + Ctrl + o + w"
+        "[session] Detach session" "Ctrl + ] + Ctrl + o + d"
+        Quit "Ctrl + ] + Ctrl + q"
+      }
+      SwitchToMode "Locked"
+    }
+    // Navigate between Zellij panes easily
+    bind "Alt p" {
+      LaunchOrFocusPlugin "zjpane" {
+        floating true
+        move_to_focused_tab true
+      }
+      SwitchToMode "Locked"
+    }
+    // Tab switcher
+    bind "Alt r" {
+      LaunchOrFocusPlugin "room" {
+        floating true
+        ignore_case true
+        quick_jump true
+      }
+      SwitchToMode "Locked"
+    }
+    // // Fuzzy finder for file names and their contents
+    // bind "Alt m" {
+    //   LaunchOrFocusPlugin "monocle" {
+    //     floating false
+    //     in_place true
+    //     kiosk true
+    //   }
+    //   SwitchToMode "Locked"
+    // }
+    // Jump among tabs with searching
+    bind "Alt b" {
+      LaunchOrFocusPlugin "buffers" {
+        floating true
+      }
+      SwitchToMode "Locked"
+    }
+    // FIXME: Not working
+    // Navigate your motions from pane-to-pane
+    bind "Alt j" {
+      LaunchOrFocusPlugin "zj-jump-list" {
+        floating true
+        move_to_focused_tab true
+      }
+      SwitchToMode "Locked"
+    }
+    // TODO: What is the difference with session-manager?
+    // Conveniently jump across sessions, can expand sessions to see active tabs
+    bind "Alt c" {
+      LaunchOrFocusPlugin "zj-choose-tree" {
+        floating true
+        move_to_focused_tab true
+        show_plugins true
+      }
+      SwitchToMode "Locked"
+    }
+    // Manage command bookmarks and quickly insert them into the terminal
+    bind "Alt k" {
+      LaunchOrFocusPlugin "zj-bookmarks" {
+        floating true
+        cwd "/home/swarnendu/.config/zellij/"
+        filename "zellij_bookmarks.yaml"
+      }
+      SwitchToMode "Locked"
+    }
+    // Create sessions based on folder names
+    bind "Alt s" {
+      LaunchOrFocusPlugin "zj-sessionizer" {
+        floating true
+        move_to_focused_tab true
+        cwd "/home/swarnendu/"
+        root_dirs "/home/swarnendu/iitk-workspace;/home/swarnendu/prospar-workspace;/home/swarnendu/github;/home/swarnendu/bitbucket"
+      }
+      SwitchToMode "Locked"
+    }
+    // TODO: What is the utility?
+    // Save favorites sessions and flush the others
+    bind "Alt a" {
+      LaunchOrFocusPlugin "zj-favs" {
+        floating true
+        ignore_case true
+        quick_jump true
+      }
+      SwitchToMode "Locked"
+    }
+  }
+  shared_except "pane" "locked" {
+    bind "Ctrl p" {
+      SwitchToMode "Pane"
+    }
+  }
+  shared_except "search" "locked" {
+    bind "Ctrl s" {
+      SwitchToMode "Search"
+    }
+  }
+  shared_except "scroll" "locked" {
+    bind "Ctrl l" {
+      SwitchToMode "Scroll"
+    }
+  }
+  shared_except "session" "locked" {
+    bind "Ctrl o" {
+      SwitchToMode "Session"
+    }
+  }
+  shared_except "tab" "locked" {
+    bind "Ctrl t" {
+      SwitchToMode "Tab"
+    }
+  }
+  shared_except "move" "locked" {
+    bind "Ctrl h" {
+      SwitchToMode "Move"
+    }
+  }
+  shared_except "locked" "search" "scroll" "renametab" "renamepane" "entersearch" {
+    bind "Esc" {
+      SwitchToMode "Locked"
+    }
+  }
+  shared_among "pane" "move" "tab" "search" "scroll" "renametab" "renamepane" "session" {
+    bind "Ctrl n" {
+      SwitchToMode "Normal"
+    }
+  }
+  shared_among "search" "scroll" {
+    bind "Home" {
+      ScrollToTop
+    }
+    bind "End" {
+      ScrollToBottom
+    }
+    bind "Down" {
+      ScrollDown
+    }
+    bind "Up" {
+      ScrollUp
+    }
+    bind "PageDown" {
+      PageScrollDown
+    }
+    bind "PageUp" {
+      PageScrollUp
+    }
+    bind "Ctrl v" "Right" {
+      HalfPageScrollDown
+    }
+    bind "Alt v" "Left" {
+      HalfPageScrollUp
+    }
+    bind "Esc" {
+      ScrollToBottom
+      SwitchToMode "Normal"
+    }
+  }
+}
+// Plugin aliases - can be used to change the implementation of Zellij
+// changing these requires a restart to take effect
+plugins {
+  tab-bar location="zellij:tab-bar"
+  status-bar location="zellij:status-bar"
+  strider location="zellij:strider"
+  compact-bar location="zellij:compact-bar"
+  session-manager location="zellij:session-manager"
+  // welcome-screen location="zellij:session-manager" {
+  //   welcome_screen true
+  // }
+  // filepicker location="zellij:strider" {
+  //   cwd "/"
+  // }
+  configuration location="zellij:configuration"
+  // plugin-manager location="zellij:plugin-manager"
+  // about location="zellij:about"
+  // Customizable status bar
+  zj-status location="file:~/.local/share/zellij/plugins/zjstatus.wasm" {
+    bg "#2e3440"
+    fg "#ffffff"
+    status_text {
+      show true
+      style {
+        fg "#ffffff"
+        bg "#2e3440"
+      }
+    }
+  }
+  zj-hints location="file:$HOME/.local/share/zellij/plugins/zjstatus-hints.wasm" {
+    // Maximum number of characters to display, 0 = unlimited
+    max_length 0
+    // String to append when truncated
+    overflow_str "..."
+    // Name of the pipe for zjstatus integration
+    pipe_name "zjstatus_hints"
+    // Hide hints in base mode (a.k.a. default mode). E.g. if you have set
+    // default_mode to "locked", then you can hide hints in the locked mode by
+    // setting this to true.
+    hide_in_base_mode false
+  }
+  // Confirm before quitting
+  zj-quit location="file:$HOME/.local/share/zellij/plugins/zj-quit.wasm" {
+    confirm_key "q"
+    cancel_key "Esc"
+  }
+  // Access and search through a customizable list of items (e.g., keybindings)
+  zj-forgot location="file:$HOME/.local/share/zellij/plugins/zellij_forgot.wasm"
+  // Fuzzy finder for file names and their contents
+  // monocle location="file:$HOME/.local/share/zellij/plugins/monocle.wasm"
+  // Tab switcher
+  room location="file:$HOME/.local/share/zellij/plugins/room.wasm"
+  // Convenient switching between tabs with search capabilities
+  buffers location="file:$HOME/.local/share/zellij/plugins/zbuffers.wasm"
+  // Enables quick navigation to your favorite panes.
+  harpoon location="file:$HOME/.local/share/zellij/plugins/harpoon.wasm"
+  // Navigate between Zellij panes easily
+  zjpane location="file:$HOME/.local/share/zellij/plugins/zj-pane.wasm"
+  // Navigate your motions from pane-to-pane
+  zj-jump-list location="file:$HOME/.local/share/zellij/plugins/zellij-jump-list.wasm"
+  //  Quickly switch between sessions
+  zj-choose-tree location="file:$HOME/.local/share/zellij/plugins/zellij-choose-tree.wasm"
+  // Manage command bookmarks and quickly insert them into the terminal
+  zj-bookmarks location="file:$HOME/.local/share/zellij/plugins/zellij-bookmarks.wasm"
+  // Create sessions based on folder names
+  zj-sessionizer location="file:$HOME/.local/share/zellij/plugins/zellij-sessionizer.wasm"
+  // Save favorites sessions and flush the others
+  zj-favs location="file:$HOME/.local/share/zellij/plugins/zellij-favs.wasm"
+ // zj-pomodoro location="file:$HOME/.local/share/zellij/plugins/zj-pomodoro-clock.wasm"
+  
+  // zj-what-time location="file:$HOME/.local/share/zellij/plugins/zellij-what-time.wasm" {  
+  // }
+  
+  // zj-datetime location="file:$HOME/.local/share/zellij/plugins/zellij-datetime.wasm" {
+  //   default_timezone "IST"
+  //   date_format "%Y/%m/%d %A"
+  //   time_format "%I:%M %p"
+  //   background_color "#0080a0"
+  //   foreground_color "#ffffff"
+  //   pane_color "#1e1e1e"
+  //   enable_right_click false
+  //   arrow_separator1 ""
+  //   arrow_separator2 ""
+  //   arrow_separator3 ""
+  //   padding_adjust 0
+  //   text_align "right"
+  // }
+}
+// Plugins to load in the background when a new session starts
+load_plugins {
+ // Hide frame to maximize screen space
+  // "file:$HOME/.local/share/zellij/plugins/zjframes.wasm" {
+  // hide_frame_for_single_pane "true"
+  // hide_frame_except_for_search "false"
+  // hide_frame_except_for_scroll "false"
+  // hide_frame_except_for_fullscreen "false"
+  //}
+
+  // zjstatus-hints
+
+}
+default_shell "fish"
+theme "nord"
+default_layout "compact-many-tabs"
+// Allows forwarding the key presses to terminal applications like Emacs.
+default_mode "locked"
+// Try a layout with "zellij --layout /path/layout".
+layout_dir "/home/swarnendu/.config/zellij/layouts"
+theme_dir "/home/swarnendu/.config/zellij/themes"
+show_release_notes false
+// When a session name is provided, attach to the named session if it is already
+// running, create otherwise.
+attach_to_session true
+show_startup_tips false
+ui {
+  pane_frames {
+    rounded_corners true
+    hide_session_name false
+  }
+}

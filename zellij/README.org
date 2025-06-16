@@ -1,0 +1,18 @@
+#+AUTHOR: Swarnendu Biswas
+#+STARTUP: showeverything noindent nonum align inlineimages showstars odd nohideblocks entitiespretty
+
+* Zellij
+
+It is informative to use the hostname as the session name to easily identify which system we are working on. 
+
+Fish: ~zellij attach --create $USER@(hostname)~
+Bash: ~zellij attach --create $USER@$HOSTNAME~
+
+Another option is to use ~zellij -s $hostname attach~.
+
+- Disable session resurrection: Set ~session_serialization false~ and delete ~~/.cache/zellij~.
+- Show current layout: ~zellij action dump-layout~
+- Show current layout: ~zellij setup --dump-config~
+- ~zellij setup --clean~  
+
+

@@ -1,0 +1,17 @@
+vars:
+  global_var: "Global value"
+  path: "/home/swarnendu/"
+
+cmds:
+  greet: "echo 'Hello, World!'"
+  list_files: "ls -la {{ path }}"
+  custom_echo: "echo '{{ message }}'"
+
+bookmarks:
+- name: "Emacs"
+  desc: "Run Emacs"
+  cmds:
+  - "emacs -nw"
+  exec: true
+  labels:
+  - "emacs"

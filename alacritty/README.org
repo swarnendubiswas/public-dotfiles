@@ -1,8 +1,5 @@
-#+TITLE: Customizing Alacritty
-#+AUTHOR: Swarnendu Biswas
-#+EMAIL: swarnendu@cse.iitk.ac.in
+#+STARTUP: showeverything noindent nonum align inlineimages showstars oddeven nohideblocks entitiespretty
 #+OPTIONS: author:t date:nil ^:{}
-#+STARTUP: showeverything indent nonum align showstars nohideblocks entitiespretty
 
 * Alacritty
 
