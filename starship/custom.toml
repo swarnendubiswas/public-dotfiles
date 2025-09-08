@@ -5,7 +5,7 @@
 # Disable the blank line at the start of the prompt
 add_newline = false
 right_format = '$cmd_duration$status'
-command_timeout = 1000
+command_timeout = 2000
 
 format = """
 [](mauve)\
@@ -17,12 +17,9 @@ $hostname\
 $directory\
 [](bg:yellow fg:teal)\
 $git_branch\
-$git_commit\
-$git_state\  
 $git_status\
 [](fg:yellow bg:lavender)\
 $conda\
-$meson\
 $spack\  
 [ ](fg:lavender)\
 $sudo\
@@ -85,9 +82,10 @@ disabled = true
 ssh_only = false
 style = "bg:peach fg:crust"
 format = '[ $ssh_symbol$hostname]($style)'
+# Add whitespace here so that it does not show up while working locally
+ssh_symbol = "🌐 "
 
 [memory_usage]
-ssh_only = false
 disabled = true
 
 [os]
@@ -98,22 +96,16 @@ style = "bg:mauve fg:crust"
 Windows = ""
 Ubuntu = "󰕈"
 SUSE = ""
-Raspbian = "󰐿"
 Mint = "󰣭"
-Macos = "󰀵"
 Manjaro = ""
 Linux = "󰌽"
 Gentoo = "󰣨"
 Fedora = "󰣛"
-Alpine = ""
-Amazon = ""
 Android = ""
 Arch = "󰣇"
-Artix = "󰣇"
 CentOS = ""
 Debian = "󰣚"
 Redhat = "󱄛"
-RedHatEnterprise = "󱄛"
 
 [directory]
 style = "bg:teal fg:crust"
@@ -143,11 +135,6 @@ format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
 [c]
 symbol = " "
-style = "bg:green"
-format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
-
-[rust]
-symbol = ""
 style = "bg:green"
 format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
@@ -223,6 +210,11 @@ base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
 
+[rust]
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
+
 [shell]
 disabled = false
 bash_indicator = ""
@@ -235,9 +227,6 @@ disabled = false
 
 [time]
 disabled = true
-time_format = "%R"
-style = "bg:lavender"
-format = '[[  $time ](fg:crust bg:lavender)]($style)'
 
 [username]
 show_always = true

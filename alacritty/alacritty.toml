@@ -9,6 +9,9 @@ draw_bold_text_with_bright_colors = true
 [env]
 TERM = "alacritty"
 
+[font.normal]
+family = "JetBrainsMonoNerdFontMono"
+
 [mouse]
 hide_when_typing = true
 
@@ -17,16 +20,17 @@ save_to_clipboard = true
 
 [terminal.shell]
 program = "fish"
-
 args = ["-l", "-i"]
 # args = ["-l", "-c", "tmux new -As0"]
 # args = ["-l", "-c", "zellij a --create $USER@$(hostname)"]
 
 [window]
-opacity = 0.85
+opacity = 0.90
+# Having the title bar to drag is useful when we use two monitors
+# decorations = "None"
 startup_mode = "Maximized"
-padding = { x = 2, y = 2 }
-decorations = "None"
+# Blur only works on kwin wayland
+blur = false
 
 # Keybindings are customized for terminal Emacs.
 [keyboard]
@@ -35,7 +39,8 @@ bindings = [
     { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" },
     { key = "W", mods = "Control|Shift", action = "Quit" },
     { key = "Q", mods = "Control|Shift", action = "Quit" },
-    { key = "Q", mods = "Control", action = "Quit" },
+    # Let Zellij handle this for confirmation
+    # { key = "Q", mods = "Control", action = "Quit" },
     { key = "B", mods = "Control|Shift", action = "SearchBackward", mode = "~Search" },
     { key = "F", mods = "Control|Shift", action = "SearchForward", mode = "~Search" },
     { key = "C", mods = "Control|Shift", action = "Copy" },

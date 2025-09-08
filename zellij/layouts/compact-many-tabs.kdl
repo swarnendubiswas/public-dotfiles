@@ -1,14 +1,20 @@
 layout {
     cwd "/home/swarnendu"
-    tab name="Emacs" focus=true hide_floating_panes=true {
-        pane focus=true {
-            command "emacs" 
-            args "-nw"
-        }
-        pane size=1 borderless=true {
-            plugin location="compact-bar"
-        }        
-    }  
+    // tab name="Emacs" focus=true hide_floating_panes=true {
+    //     pane focus=true {
+    //         command "emacs" 
+    //         args "-nw"
+    //     }
+    //     pane size=1 borderless=true {
+    //         plugin location="compact-bar"
+    //     }        
+    // }
+    tab name="Tab #1" hide_floating_panes=true {
+      pane focus=true
+      pane size=1 borderless=true {
+        plugin location="compact-bar"
+      }
+    }
     tab name="Tab #2" hide_floating_panes=true {
       pane focus=true
       pane size=1 borderless=true {

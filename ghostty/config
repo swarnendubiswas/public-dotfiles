@@ -1,25 +1,23 @@
 # Run "ghostty +show-config --default --docs" to view a list of all available
-# config options and their default values.
-
-# Each config option is explained at https://ghostty.org/docs/config.
+# config options and their default values. See available themes with "ghostty
+# +list-themes". Each config option is explained at
+# https://ghostty.org/docs/config.
 
 # Only applies to the first terminal surface created when Ghostty starts
 initial-command = /usr/bin/fish --login --interactive
-# initial-command = zellij a --create $USER@$(hostname)
 
-# This command will be used for all new terminal surfaces, i.e. new windows,
-# tabs, etc.
+# This command will be used for subsequent new terminal surfaces, i.e., new
+# windows, tabs, etc.
 command = /usr/bin/fish --login --interactive
-# command = zellij a --create $USER@$(hostname)
 
-# ghostty +list-themes
-theme = modus-vivendi
-
-font-size = 21
-font-family = "JetBrainsMonoNerdFont"
+font-size = 20
+font-family = "JetBrainsMonoNerdFontMono"
 # Bold text will use the bright color palette
 bold-is-bright = true
 font-feature = -calt, -liga, -dlig, +zero
+font-thicken = true
+
+# theme = catppuccin-mocha
 
 mouse-hide-while-typing = true
 
@@ -28,13 +26,17 @@ clipboard-read = allow
 copy-on-select = clipboard
 clipboard-paste-protection = false
 
-background-opacity = 0.85
+background-opacity = 0.90
 background-blur = false
 
 maximize = true
+# Having the title bar to drag is useful when we use two monitors. Enable with
+# toggle_window-decorations keybinding.
 gtk-titlebar-hide-when-maximized = true
+window-padding-balance = true
 
 app-notifications = no-clipboard-copy
+shell-integration-features = no-cursor
 
 # Check keybindings with "ghostty +list-keybinds --default". Fn or globe keys
 # are not supported as modifiers.
@@ -57,7 +59,7 @@ keybind = ctrl+shift+right=next_tab
 keybind = ctrl+shift+tab=previous_tab
 keybind = ctrl+shift+left=previous_tab
 
-# These are used for Zellij
+# These are used for switching between Zellij tabs.
 # keybind = shift+right=next_tab
 # keybind = shift+left=previous_tab
 
@@ -72,38 +74,41 @@ keybind = super+eight=goto_tab:8
 keybind = super+nine=goto_tab:9
 keybind = super+0=last_tab
 
-# forward/right
+# Forward/right
 keybind = ctrl+shift+.=move_tab:1
-# backward/left
+# Backward/left
 keybind = ctrl+shift+,=move_tab:-1
 
-keybind = ctrl+shift+m=new_split:down
-keybind = ctrl+shift+n=new_split:right
+# Other split directions do not make sense
+keybind = ctrl+shift+s>d=new_split:down
+keybind = ctrl+shift+s>r=new_split:right
 
-keybind = ctrl+shift+]=goto_split:down
-keybind = ctrl+shift+[=goto_split:up
+keybind = ctrl+shift+s>down=goto_split:down
+keybind = ctrl+shift+s>up=goto_split:up
+keybind = ctrl+shift+s>left=goto_split:left
+keybind = ctrl+shift+s>right=goto_split:right
 
-keybind = ctrl+alt+up=goto_split:up
-keybind = ctrl+alt+down=goto_split:down
-keybind = ctrl+alt+left=goto_split:left
-keybind = ctrl+alt+right=goto_split:right
-
-keybind = alt+shift+equal=equalize_splits
+keybind = ctrl+shift+s>equal=equalize_splits
+keybind = ctrl+shift+s>x=close_surface
 
 keybind = ctrl+shift+up=scroll_page_lines:-3
 keybind = ctrl+shift+down=scroll_page_lines:3
 
-# keybind = ctrl+shift+home=scroll_to_top
-# keybind = ctrl+shift+end=scroll_to_bottom
-# keybind = ctrl+shift+page_up=scroll_page_up
-# keybind = ctrl+shift+page_down=scroll_page_down
+# These will not work if Fn key is required for Home/End/PgUp/PgDn like on some
+# laptops.
+keybind = ctrl+shift+home=scroll_to_top
+keybind = ctrl+shift+end=scroll_to_bottom
+keybind = ctrl+shift+page_up=scroll_page_up
+keybind = ctrl+shift+page_down=scroll_page_down
 
+# These have been defined as alternatives because of the limitation with Fn
+# keys.
 keybind = ctrl+super+[=scroll_to_top
 keybind = ctrl+super+]=scroll_to_bottom
 keybind = ctrl+shift+b=scroll_page_up
 keybind = ctrl+shift+f=scroll_page_down
 
-# negative is backward
+# Negative is backward
 keybind = ctrl+shift+k=jump_to_prompt:-1
 keybind = ctrl+shift+j=jump_to_prompt:1
 
@@ -111,8 +116,12 @@ keybind = ctrl+shift+equal=increase_font_size:1
 keybind = ctrl+shift+minus=decrease_font_size:1
 keybind = ctrl+shift+0=reset_font_size
 
+keybind = ctrl+shift+a=select_all
+
 keybind = ctrl+shift+f10=toggle_maximize
 keybind = ctrl+shift+f11=toggle_fullscreen
+keybind = ctrl+shift+f12=toggle_window_decorations
+keybind = ctrl+shift+p=toggle_command_palette
 
 keybind = ctrl+shift+f2=open_config
 keybind = ctrl+shift+f5=reload_config
