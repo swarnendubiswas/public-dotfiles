@@ -1,0 +1,46 @@
+layout {
+    default_tab_template {
+        children
+        pane size=1 borderless=true {
+            plugin location="zj-status" {
+                format_left "{mode}#[fg=#44475a,bg=#282a36] {tabs}"
+                format_right "#[fg=#44475a,bg=#282a36]{session}"
+                format_space "#[bg=#282a36]"
+                // Locked: Green (Matches your "Safe" Emacs state)
+                mode_locked "#[bg=#50fa7b,fg=#282a36,bold]  LOCKED "
+                // Normal: Cyan
+                mode_normal "#[bg=#8be9fd,fg=#282a36,bold] NORMAL "
+                // Pane/Tab: Orange
+                mode_pane "#[bg=#ffb86c,fg=#282a36,bold] PANE "
+                mode_tab "#[bg=#ffb86c,fg=#282a36,bold] TAB "
+                // Scroll/Search: Yellow/Pink
+                mode_scroll "#[bg=#f1fa8c,fg=#282a36,bold] SCROLL "
+                mode_search "#[bg=#ff79c6,fg=#282a36,bold] SEARCH "
+                mode_session "#[bg=#bd93f9,fg=#282a36,bold] SESSION "
+                // -- TABS ------------------------------------------------
+                tab_normal "#[fg=#6272a4,bg=#282a36] {index} {name}{floating_indicator} "
+                tab_active "#[fg=#f8f8f2,bg=#44475a,bold,italic] {index} {name} "
+                tab_fullscreen_indicator "#[fg=#ff5555] □ "
+                tab_sync_indicator "#[fg=#50fa7b]  "
+                notification_format_no_notifications ""
+                notification_show_interval "10"
+                // -- SESSION ---------------------------------------------
+                command_host_command "uname -n"
+                command_host_format "{stdout}"
+                command_host_interval "0"
+                command_host_rendermode "static"
+                command_user_command "whoami"
+                command_user_format "{stdout}"
+                command_user_interval "10"
+                command_user_rendermode "static"
+                command_git_branch_command "git rev-parse --abbrev-ref HEAD"
+                command_git_branch_format "#[fg=#8be9fd] {stdout} "
+                command_git_branch_interval "10"
+                command_git_branch_rendermode "static"
+                datetime "#[fg=#6272a4] {format} "
+                datetime_format "%d-%m-%Y 󰅐 %H:%M"
+                datetime_timezone "Asia/Kolkata"
+            }
+        }
+    }
+}

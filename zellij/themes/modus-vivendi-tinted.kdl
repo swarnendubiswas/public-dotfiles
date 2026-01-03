@@ -1,0 +1,25 @@
+themes {
+    modus-vivendi-tinted {// Background colors
+        bg "#1d2235"
+        fg "#ffffff"
+        // ANSI colors based on Modus Vivendi Tinted
+        black "#1d2235"
+        red "#ff5f59"
+        green "#44bc44"
+        yellow "#d0bc00"
+        blue "#2fafff"
+        magenta "#feacd0"
+        cyan "#00d3d0"
+        white "#989898"
+        // Bright variants
+        orange "#ef8b50"
+        // UI elements
+        gray "#4f5666"
+        silver "#a8a8a8"
+        pink "#feacd0"
+        brown "#b06240"
+        // Status bar
+        black "#1d2235"
+        white "#ffffff"
+    }
+}

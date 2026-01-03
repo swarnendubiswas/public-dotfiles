@@ -1,45 +1,62 @@
 # Run "ghostty +show-config --default --docs" to view a list of all available
-# config options and their default values. See available themes with "ghostty
-# +list-themes". Each config option is explained at
+# config options and their default values. Each config option is explained at
 # https://ghostty.org/docs/config.
 
 # Only applies to the first terminal surface created when Ghostty starts
-initial-command = /usr/bin/fish --login --interactive
+
+# initial-command = /usr/bin/fish --login --interactive
+initial-command = /usr/bin/fish 
 
 # This command will be used for subsequent new terminal surfaces, i.e., new
 # windows, tabs, etc.
-command = /usr/bin/fish --login --interactive
 
+# command = /usr/bin/fish --login --interactive
+command = /usr/bin/fish
+
+# We include a default definition of the following settings. These settings can
+# be overridden in the "private" file.
+font-family = IosevkaTerm Nerd Font Mono
 font-size = 20
-font-family = "JetBrainsMonoNerdFontMono"
-# Bold text will use the bright color palette
-bold-is-bright = true
-font-feature = -calt, -liga, -dlig, +zero
-font-thicken = true
 
-# theme = catppuccin-mocha
+theme = Dracula
+
+# Ligatures hurt readability
+
+font-feature = -calt, -liga, +zero
 
 mouse-hide-while-typing = true
 
 clipboard-read = allow
-# Always copy text to the selection clipboard as well as the system clipboard.
-copy-on-select = clipboard
 clipboard-paste-protection = false
 
+# Always copy text to the selection clipboard as well as the system clipboard. By default, selected text is copied only to the selection clipboard.
+
+# copy-on-select = clipboard
+
 background-opacity = 0.90
-background-blur = false
+# Supported on KDE Plasma (Wayland and X11)
+background-blur = true
 
 maximize = true
-# Having the title bar to drag is useful when we use two monitors. Enable with
-# toggle_window-decorations keybinding.
-gtk-titlebar-hide-when-maximized = true
-window-padding-balance = true
 
-app-notifications = no-clipboard-copy
-shell-integration-features = no-cursor
+# Having the title bar to drag is useful when we use two monitors. Enable with
+# toggle_window_decorations keybinding (Ctrl+Shift+F12).
+
+# gtk-titlebar-hide-when-maximized = true
+
+# The default is native, but using tabs save vertical height by merging tabs in the title bar. This makes dragging windows with the title bar difficult.
+gtk-titlebar-style = tabs
+
+# gtk-toolbar-style = flat
+
+# Balance extra padding on all the four sides 
+window-padding-balance = true
+window-inherit-working-directory = false
 
 # Check keybindings with "ghostty +list-keybinds --default". Fn or globe keys
 # are not supported as modifiers.
+
+# Keybindings are customized for terminal Emacs. Control is passed to the terminal app, Control+Shift is for terminal UI, Super is for terminal-only (tabs, windows). Avoid binding Alt.
 
 keybind = clear
 
@@ -59,19 +76,12 @@ keybind = ctrl+shift+right=next_tab
 keybind = ctrl+shift+tab=previous_tab
 keybind = ctrl+shift+left=previous_tab
 
-# These are used for switching between Zellij tabs.
-# keybind = shift+right=next_tab
-# keybind = shift+left=previous_tab
-
 keybind = super+one=goto_tab:1
 keybind = super+two=goto_tab:2
 keybind = super+three=goto_tab:3
 keybind = super+four=goto_tab:4
 keybind = super+five=goto_tab:5
 keybind = super+six=goto_tab:6
-keybind = super+seven=goto_tab:7
-keybind = super+eight=goto_tab:8
-keybind = super+nine=goto_tab:9
 keybind = super+0=last_tab
 
 # Forward/right
@@ -89,7 +99,12 @@ keybind = ctrl+shift+s>left=goto_split:left
 keybind = ctrl+shift+s>right=goto_split:right
 
 keybind = ctrl+shift+s>equal=equalize_splits
+# A surface can be a window, tab, or a split.
 keybind = ctrl+shift+s>x=close_surface
+
+# keybind = ctrl+shift+f=start_search
+# keybind = ctrl+shift+f3=navigate_search:next
+# keybind = shift+f3=navigate_search:previous
 
 keybind = ctrl+shift+up=scroll_page_lines:-3
 keybind = ctrl+shift+down=scroll_page_lines:3
@@ -108,6 +123,8 @@ keybind = ctrl+super+]=scroll_to_bottom
 keybind = ctrl+shift+b=scroll_page_up
 keybind = ctrl+shift+f=scroll_page_down
 
+# Jump by command prompts (with auto-scroll)
+
 # Negative is backward
 keybind = ctrl+shift+k=jump_to_prompt:-1
 keybind = ctrl+shift+j=jump_to_prompt:1
@@ -122,8 +139,29 @@ keybind = ctrl+shift+f10=toggle_maximize
 keybind = ctrl+shift+f11=toggle_fullscreen
 keybind = ctrl+shift+f12=toggle_window_decorations
 keybind = ctrl+shift+p=toggle_command_palette
+# GTK Wayland only
+keybind = ctrl+shift+m=toggle_quick_terminal
 
 keybind = ctrl+shift+f2=open_config
 keybind = ctrl+shift+f5=reload_config
 
-keybind = ctrl+q=quit
+keybind = ctrl+q=unbind
+
+# https://github.com/rumman02/dotfiles-latest/blob/db55d7f6e350b4d8bfbef0eb4e5ee5ccee428512/ghostty/config
+keybind = ctrl+apostrophe=text:\x1b[39;5u
+keybind = ctrl+comma=text:\x1b[44;5u
+keybind = ctrl+period=text:\x1b[46;5u
+keybind = ctrl+slash=text:\x1b[47;5u
+keybind = ctrl+semicolon=text:\x1b[59;5u
+keybind = ctrl+grave_accent=text:\x1b[96;5u
+keybind = ctrl+shift+backspace=text:\x1b[127;6u
+keybind = ctrl+shift+comma=text:\x1b[44;6u
+keybind = ctrl+shift+period=text:\x1b[46;6u
+
+# config-file keys are processed at the end of the current file. This means that
+# any keys after a config-file key will not override the keys in the loaded file
+# if they are set.
+
+# Theme and font size settings are in "private" because they may vary across
+# setups and we do not want to commit them
+config-file = ./private

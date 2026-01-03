@@ -65,13 +65,20 @@ emacs() {
     make distclean
     ./autogen.sh
 
-    # The arguments are based on Emacs 30.
-    ./configure --with-x-toolkit=no --with-gif=ifavailable --with-tiff=ifavailable --with-gnutls=ifavailable --disable-gc-mark-trace --enable-link-time-optimization CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -funroll-loops -floop-parallelize-all -flto" --prefix="$HOME/.local"
+    # The arguments are based on Emacs 30. "--enable-link-time-optimization",
+    # "-floop-parallelize-all", and "-flto" may fail with older GCC
+    # installations if Graphite is not installed. Use "--without-tree-sitter" to
+    # install on old systems or systems without sudo privileges. Use the below
+    # commented configure setup for such systems.
+
+    # ./configure --with-x-toolkit=no --with-gif=ifavailable --with-tiff=ifavailable --with-gnutls=ifavailable --disable-gc-mark-trace --without-tree-sitter CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -funroll-loops" --prefix="$HOME/.local"
+
+    ./configure --disable-gc-mark-trace --enable-link-time-optimization CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -funroll-loops -floop-parallelize-all -flto" --prefix="$HOME/.local"
 
     # Use NATIVE_FULL_AOT=1 to native compile ahead-of-time all the Elisp files
     # included in the Emacs distribution instead of after startup, provided
     # native compilation is supported.
-    make -j"$(nproc --ignore=2)"
+    make -j"$(nproc --ignore=2)" NATIVE_FULL_AOT=1
     make install
 
     cd "$HOME" || echo "Failed: cd $HOME"
@@ -91,7 +98,7 @@ setup_emacs() {
     rm LanguageTool-stable.zip
 
     # Setup 24bit terminal support. We do not need this with terminal emulators
-    # like Alacritty, Kitty, and Ghostty.
+    # like Alacritty and Ghostty.
     # tic -x -o "$HOME/.terminfo" "${DOTFILES}/xterm-24bit.terminfo"
 }
 
@@ -106,10 +113,10 @@ ubuntu_packages() {
         sudo apt install -y aspell hunspell libxml2-utils chktex ruby-dev tidy python-pygments python3-pip composer imagemagick libmagick++-dev fonts-powerline pkg-config autoconf automake python3-docutils libseccomp-dev libjansson-dev libyaml-dev libxml2-dev autojump texinfo x11-utils ttf-ancient-fonts libmagickwand-dev cpanminus libjpeg-dev libtiff-dev libgif-dev libxpm-dev libgtk-3-dev libncurses5-dev libxt-dev htop unifont xfonts-terminus ttf-anonymous-pro libperl-dev libpng-dev libx11-dev libgtk2.0-dev librsvg2-dev gcc libtiff5-dev gnutls-bin libgnutls28-dev libharfbuzz-dev libharfbuzz-bin libwebkit2gtk-4.0-dev libxaw7-dev libc6-dev xaw3dg-dev zlib1g-dev libice-dev libsm-dev libxext-dev libxi-dev libxmu-dev libxmuu-dev libxrandr-dev libxtst-dev libxv-dev curl libssl-dev wget gpg libenchant-2-dev libwebp-dev webp libxft-dev libxft2 entr
         ;;
     Ubuntu_22.04)
-        sudo apt install -y aspell hunspell libxml2-utils chktex ruby-dev tidy python3-pip imagemagick libmagick++-dev fonts-powerline pkg-config autoconf automake python3-docutils libseccomp-dev libjansson-dev libyaml-dev libxml2-dev autojump texinfo x11-utils ttf-ancient-fonts libmagickwand-dev cpanminus libjpeg-dev libtiff-dev libgif-dev libxpm-dev libgtk-3-dev libncurses-dev libxt-dev htop unifont xfonts-terminus ttf-anonymous-pro libperl-dev libpng-dev libx11-dev libgtk2.0-dev librsvg2-dev gcc libtiff5-dev gnutls-bin libgnutls28-dev libharfbuzz-dev libharfbuzz-bin libxaw7-dev libc6-dev xaw3dg-dev zlib1g-dev libice-dev libsm-dev libxext-dev libxi-dev libxmu-dev libxmuu-dev libxrandr-dev libxtst-dev libxv-dev curl libssl-dev wget gpg libtree-sitter-dev libenchant-2-dev libwebp-dev webp libxft-dev libxft2 entr
+        sudo apt install -y aspell hunspell libxml2-utils chktex ruby-dev tidy python3-pip imagemagick libmagick++-dev fonts-powerline pkg-config autoconf automake python3-docutils libseccomp-dev libjansson-dev libyaml-dev libxml2-dev autojump texinfo x11-utils ttf-ancient-fonts libmagickwand-dev cpanminus libjpeg-dev libtiff-dev libgif-dev libxpm-dev libgtk-3-dev libncurses-dev libxt-dev htop unifont xfonts-terminus ttf-anonymous-pro libperl-dev libpng-dev libx11-dev libgtk2.0-dev librsvg2-dev gcc libtiff5-dev gnutls-bin libgnutls28-dev libharfbuzz-dev libharfbuzz-bin libxaw7-dev libc6-dev xaw3dg-dev zlib1g-dev libice-dev libsm-dev libxext-dev libxi-dev libxmu-dev libxmuu-dev libxrandr-dev libxtst-dev libxv-dev curl libssl-dev wget gpg libtree-sitter-dev libenchant-2-dev libwebp-dev webp libxft-dev libxft2 entr dvipng
         ;;
     Ubuntu_24.04)
-        sudo apt install -y aspell hunspell libxml2-utils chktex ruby-dev tidy python3-pip imagemagick libmagick++-dev fonts-powerline pkg-config autoconf automake python3-docutils libseccomp-dev libjansson-dev libyaml-dev libxml2-dev autojump texinfo x11-utils ttf-ancient-fonts libmagickwand-dev cpanminus libjpeg-dev libtiff-dev libgif-dev libxpm-dev libgtk-3-dev libncurses5-dev libxt-dev htop unifont xfonts-terminus fonts-anonymous-pro libperl-dev libpng-dev libx11-dev libgtk2.0-dev librsvg2-dev gcc libtiff5-dev gnutls-bin libgnutls28-dev libharfbuzz-dev libharfbuzz-bin libxaw7-dev libc6-dev xaw3dg-dev zlib1g-dev libice-dev libsm-dev libxext-dev libxi-dev libxmu-dev libxmuu-dev libxrandr-dev libxtst-dev libxv-dev curl libssl-dev wget gpg libtree-sitter-dev libenchant-2-dev libwebp-dev webp libxft-dev libxft2 entr python3-libtmux terminfo
+        sudo apt install -y aspell hunspell libxml2-utils chktex ruby-dev tidy python3-pip imagemagick libmagick++-dev fonts-powerline pkg-config autoconf automake python3-docutils libseccomp-dev libjansson-dev libyaml-dev libxml2-dev autojump texinfo x11-utils ttf-ancient-fonts libmagickwand-dev cpanminus libjpeg-dev libtiff-dev libgif-dev libxpm-dev libgtk-3-dev libncurses5-dev libxt-dev htop unifont xfonts-terminus fonts-anonymous-pro libperl-dev libpng-dev libx11-dev libgtk2.0-dev librsvg2-dev gcc libtiff5-dev gnutls-bin libgnutls28-dev libharfbuzz-dev libharfbuzz-bin libxaw7-dev libc6-dev xaw3dg-dev zlib1g-dev libice-dev libsm-dev libxext-dev libxi-dev libxmu-dev libxmuu-dev libxrandr-dev libxtst-dev libxv-dev curl libssl-dev wget gpg libtree-sitter-dev libenchant-2-dev libwebp-dev webp libxft-dev libxft2 entr python3-libtmux terminfo dvipng
         ;;
     *)
         echo "Distribution '$DISTRO' in version '$VERSION' is not supported by this script (${DIST_VERSION})."
@@ -171,9 +178,8 @@ python_packages() {
         python3 -m pip install --upgrade pip pygments setuptools yamllint cmake-language-server cmake-format "python-lsp-server[all]" python-lsp-isort pylsp-mypy pylsp-rope pyls-memestra python-lsp-ruff yapf jedi pylint importmagic pydocstyle cpplint grip konsave autotools-language-server libtmux argcomplete tldr basedpyright --user
         ;;
     Ubuntu_24.04)
-        # TODO: This requires more work.
         python3 -m pip install --upgrade pip pygments setuptools jedi libtmux argcomplete --user
-        pipx install yamllint cmake-language-server cmake-format "python-lsp-server[all]" python-lsp-isort pylsp-mypy pylsp-rope pyls-memestra yapf jedi pylint importmagic pydocstyle cpplint grip konsave autotools-language-server tldr
+        pipx install yamllint cmake-language-server cmake-format cmakelint "python-lsp-server[all]" python-lsp-isort pylsp-mypy pylsp-rope pyls-memestra yapf jedi pylint importmagic pydocstyle cpplint grip konsave autotools-language-server tldr basedpyright
         ;;
     *)
         echo "Distribution '$DISTRO' in version '$VERSION' is not supported by this script (${DIST_VERSION})."
@@ -189,10 +195,11 @@ nodejs() {
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
     \. "$HOME/.nvm/nvm.sh"
-    NODEJS_VER="22"
+    NODEJS_VER="24"
     nvm install "${NODEJS_VER}"
 }
 
+# Use Nodejs for managing the installation
 npm_packages() {
     cd "$HOME" || echo "Failed: cd $HOME"
 
@@ -202,12 +209,6 @@ npm_packages() {
 
     npm init --yes
     npm install --save-dev less jsonlint bash-language-server markdownlint-cli markdownlint-cli2 yaml-language-server htmlhint prettier @prettier/plugin-xml vscode-langservers-extracted npm-check-updates dockerfile-language-server-nodejs awk-language-server tree-sitter-cli prettier-plugin-awk fish-lsp
-
-    # Add the following to "$HOME/.bashrc"
-    # echo "export NODE_PATH=$HOME/tmp/node_modules" >>"$HOME/.bashrc"
-
-    # cmdline=$"\n\nexport NODE_PATH=\$HOME/tmp/node_modules\n"
-    # printf "%s" "$cmdline" >>"$HOME/.bashrc"
 }
 
 # $1 is source, $2 is the destination
@@ -269,7 +270,7 @@ create_symlinks() {
 ripgrep() {
     cd "$HOME" || echo "Failed: cd $HOME"
 
-    RG_VER="14.1.1"
+    RG_VER="15.1.0"
     wget https://github.com/BurntSushi/ripgrep/releases/download/"${RG_VER}/ripgrep_${RG_VER}"_amd64.deb
     sudo dpkg -i ripgrep_"${RG_VER}"_amd64.deb
     rm -rf ripgrep_"${RG_VER}"_amd64.deb*
@@ -280,27 +281,21 @@ ripgrep() {
 }
 
 cppcheck() {
-    cd "$GITHUB" || echo "Failed: cd $GITHUB"
+    cd "$HOME" || echo "Failed: cd $HOME"
 
     sudo apt install -y libpcre3-dev
-    if [ ! -d cppcheck ]; then
-        sudo -u swarnendu git clone git@github.com:danmar/cppcheck.git
-    else
-        cd cppcheck || echo "Failed: cd cppcheck"
-        sudo -u swarnendu git pull
-        cd ..
-    fi
 
-    cd cppcheck || echo "Failed: cd cppcheck"
-    git fetch
-    git checkout 2.18.0
-    mkdir -p build
-    cd build || echo "Failed: cd build"
-    cmake ..
-    cmake --build .
-    make install
-    cd ../..
-    rm -rf cppcheck
+    CPPCHECK_VER=2.18.0
+    wget https://github.com/danmar/cppcheck/archive/refs/tags/${CPPCHECK_VER}.tar.gz
+    tar xf ${CPPCHECK_VER}.tar.gz
+    cd cppcheck-${CPPCHECK_VER} || exit
+
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="$HOME/.local"
+    cmake --build build --parallel
+    cmake --install build
+
+    cd ..
+    rm -rf cppcheck-${CPPCHECK_VER} cppcheck-${CPPCHECK_VER}.tar.gz
 }
 
 # Build Universal Ctags, installing snaps seems to hurt Ubuntu performance.
@@ -335,11 +330,14 @@ global() {
 
     GLOBAL_VER="6.6.14"
     wget http://tamacom.com/global/global-${GLOBAL_VER}.tar.gz
-    tar -xzvf global-${GLOBAL_VER}.tar.gz
+    tar xf global-${GLOBAL_VER}.tar.gz
     cd global-${GLOBAL_VER} || exit
+
     ./configure --with-universal-ctags="$(which ctags)" --prefix="$HOME/.local/"
     make
     make install
+
+    cd ..
     rm global-${GLOBAL_VER}.tar.gz
 
     sfname="$DOTFILES/global/dotglobalrc"
@@ -353,8 +351,25 @@ global() {
 alacritty() {
     cd "$HOME" || echo "Failed: cd $HOME"
 
-    sudo add-apt-repository ppa:aslatter/ppa -y
-    sudo apt install -y alacritty
+    # sudo add-apt-repository ppa:aslatter/ppa -y
+    # sudo apt install -y alacritty
+
+    ALACRITTY_VER="0.16.1"
+    wget https://github.com/alacritty/alacritty/archive/refs/tags/v${ALACRITTY_VER}.tar.gz
+    tar xz v${ALACRITTY_VER}.tar.gz
+    cd alacritty-${ALACRITTY_VER} || exit
+    cargo build --release
+
+    cp target/release/alacritty "${LOCAL_DIR}/bin"
+    mkdir -p "${LOCAL_DIR}/share/icons"
+    cp extra/logo/alacritty-term.svg "${LOCAL_DIR}/share/icons/Alacritty.svg"
+    cp extra/linux/Alacritty.desktop "${LOCAL_DIR}/share/applications"
+    desktop-file-validate "${LOCAL_DIR}/share/applications/Alacritty.desktop"
+    update-desktop-database "${LOCAL_DIR}/share/applications"
+    tic -xe alacritty,alacritty-direct -o "${HOME_DIR}/.terminfo/extra/alacritty.info"
+
+    rm -rf alacritty-${ALACRITTY_VER}
+    rm v${ALACRITTY_VER}.tar.gz
 
     sfname="$DOTFILES/alacritty"
     dfname="$CONFIG_DIR/alacritty"
@@ -365,21 +380,18 @@ bear() {
     cd "$GITHUB" || echo "Failed: cd $GITHUB"
 
     sudo apt install -y libfmt-dev libspdlog-dev nlohmann-json3-dev libgrpc++-dev protobuf-compiler-grpc libssl-dev
-    if [ ! -d bear ]; then
-        sudo -u swarnendu git clone git@github.com:rizsotto/Bear.git bear
-    else
-        cd bear || echo "Failed: cd bear"
-        sudo -u swarnendu git pull
-        cd ..
-    fi
 
-    cd bear || echo "Failed: cd bear"
-    git fetch
-    git checkout 3.1.6
-    mkdir -p build && cd build || echo "Failed: cd bear/build"
-    cmake -DENABLE_UNIT_TESTS=OFF -DENABLE_FUNC_TESTS=OFF ..
-    make all
-    make install
+    BEAR_VER=3.1.6
+    wget https://github.com/rizsotto/Bear/archive/refs/tags/${BEAR_VER}.tar.gz
+    tar xf ${BEAR_VER}.tar.gz
+    cd Bear-${BEAR_VER} || exit
+
+    cmake -S . -B build -DENABLE_UNIT_TESTS=OFF -DENABLE_FUNC_TESTS=OFF -DCMAKE_INSTALL_PREFIX="$HOME/.local"
+    cmake --build build --parallel
+    cmake --install build
+
+    cd ..
+    rm -rf Bear-${BEAR_VER} ${BEAR_VER}.tar.gz
 }
 
 powerline() {
@@ -410,28 +422,26 @@ powerline() {
 }
 
 tmux() {
-    sudo apt install -y libevent-dev entr
+    cd "$HOME" || echo "Failed: cd $HOME"
 
-    cd "$GITHUB" || echo "Failed: cd $GITHUB"
+    # Install dependencies
+    sudo apt install -y libevent-dev entr ncurses-term bison xsel xclip python3-libtmux
+    pip install -U libtmux
+    wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ~/.local/bin/yq
+    chmod +x ~/.local/bin/yq
 
-    if [ -d tmux ]; then
-        cd tmux || echo "Failed: cd tmux"
-        echo "Pulling tmux reposiory from GitHub..."
-        sudo -u swarnendu git pull
-    else
-        echo "Cloning tmux repository from GitHub..."
-        sudo -u swarnendu git clone https://github.com/tmux/tmux
-    fi
-    echo "...Done"
-    chown -R "$USER":"$USER" tmux
+    TMUX_VER=3.6a
+    wget https://github.com/tmux/tmux/releases/download/${TMUX_VER}/tmux-${TMUX_VER}.tar.gz
+    tar xf tmux-${TMUX_VER}.tar.gz
+    cd tmux-${TMUX_VER} || exit
 
-    cd tmux || echo "Failed: cd tmux"
-    git fetch
-    git checkout 3.5a
     ./autogen.sh
-    ./configure prefix="$HOME/.local/"
+    ./configure --prefix="$HOME/.local/"
     make
     make install
+
+    cd ..
+    rm -rf tmux-${TMUX_VER} tmux-${TMUX_VER}.tar.gz
 
     sfname="$DOTFILES/tmux/tmux.conf"
     dfname="$HOME/.tmux.conf"
@@ -467,7 +477,7 @@ zoxide() {
 bat() {
     cd "$HOME" || echo "Failed: cd $HOME"
 
-    BAT_VER="0.25.0"
+    BAT_VER="0.26.0"
     wget https://github.com/sharkdp/bat/releases/download/v"${BAT_VER}"/bat_"${BAT_VER}"_amd64.deb
     sudo dpkg -i bat_"${BAT_VER}"_amd64.deb
     rm bat_"${BAT_VER}"_amd64.deb
@@ -476,29 +486,21 @@ bat() {
 fd() {
     cd "$HOME" || echo "Failed: cd $HOME"
 
-    FD_VER="10.2.0"
+    FD_VER="10.3.0"
     wget https://github.com/sharkdp/fd/releases/download/v"${FD_VER}"/fd_"${FD_VER}"_amd64.deb
     sudo dpkg -i fd_"${FD_VER}"_amd64.deb
     rm fd_"${FD_VER}"_amd64.deb
 }
 
 fzf() {
-    cd "$GITHUB" || echo "Failed: cd $GITHUB"
+    cd "$HOME" || echo "Failed: cd $HOME"
 
-    if [ ! -d fzf ]; then
-        git clone https://github.com/junegunn/fzf.git
-    else
-        cd fzf || echo "Failed: cd fzf"
-        sudo -u swarnendu git pull
-        cd ..
-    fi
-
-    FZF_VER="v0.62.0"
-
-    cd fzf || exit
-    git fetch
-    git checkout ${FZF_VER}
-    bash ./install --no-zsh --key-bindings --completion --no-update-rc
+    FZF_VER="0.67.0"
+    wget https://github.com/junegunn/fzf/releases/download/v"${FZF_VER}"/fzf-"${FZF_VER}"-linux_amd64.tar.gz
+    tar xf fzf-"${FZF_VER}"-linux_amd64.tar.gz
+    mv fzf ~/.local/bin/
+    # bash ./install --no-zsh --key-bindings --completion --no-update-rc
+    rm fzf-"${FZF_VER}"-linux_amd64.tar.gz
 }
 
 perl_server() {
@@ -510,18 +512,15 @@ cargo_packages() {
     # Ubuntu's default Rust versions are usually old
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-    cargo install asm-lsp
+    cargo install asm-lsp kdlfmt cargo-cache cargo-update neocmakelsp zellij
     cargo install taplo-cli --features lsp
-    cargo install kdlfmt
-    cargo install cargo-cache
-    cargo install cargo-update
     cargo install-update -a
 }
 
 install_font() {
     wget https://github.com/ryanoasis/nerd-fonts/releases/download/v"$2"/"$1.tar.xz"
     tar xf "$1.tar.xz"
-    mv *.ttf "$3"
+    mv ./*.ttf "$3"
     rm "$1.tar.xz"
 }
 
@@ -548,11 +547,15 @@ nerd_fonts() {
 zellij() {
     cd "$HOME" || echo "Failed: cd $HOME"
 
-    ZELLIJ_VER="0.43.1"
-    wget https://github.com/zellij-org/zellij/releases/download/v"${ZELLIJ_VER}"/zellij-x86_64-unknown-linux-musl.tar.gz
-    tar xf zellij-x86_64-unknown-linux-musl.tar.gz
-    mv zellij "${LOCAL_DIR}/bin"
-    rm zellij-x86_64-unknown-linux-musl.tar.gz
+    # We prefer installing Zellij with Cargo because then the times when sessions were created are shown correctly. The durations shown when copying the released binary are incorrect.
+
+    # ZELLIJ_VER="0.43.1"
+    # wget https://github.com/zellij-org/zellij/releases/download/v"${ZELLIJ_VER}"/zellij-x86_64-unknown-linux-musl.tar.gz
+    # tar xf zellij-x86_64-unknown-linux-musl.tar.gz
+    # mv zellij "${LOCAL_DIR}/bin"
+    # rm zellij-x86_64-unknown-linux-musl.tar.gz
+
+    cargo install zellij
 
     sfname="$DOTFILES/zellij"
     dfname="${CONFIG_DIR}/zellij"
@@ -561,14 +564,11 @@ zellij() {
     cd "${LOCAL_DIR}/share"
     mkdir -p zellij/plugins
 
-    wget https://github.com/dj95/zjstatus/releases/download/v0.21.0/zjstatus.wasm
+    wget https://github.com/dj95/zjstatus/releases/download/v0.22.0/zjstatus.wasm
     mv zjstatus.wasm zellij/plugins/.
 
-    wget https://github.com/dj95/zjstatus/releases/download/v0.21.0/zjframes.wasm
+    wget https://github.com/dj95/zjstatus/releases/download/v0.22.0/zjframes.wasm
     mv zjframes.wasm zellij/plugins/.
-
-    wget https://github.com/b0o/zjstatus-hints/releases/download/v0.1.4/zjstatus-hints.wasm
-    mv zjstatus-hints.wasm zellij/plugins/.
 
     wget https://github.com/cristiand391/zj-quit/releases/download/0.3.1/zj-quit.wasm
     mv zj-quit.wasm zellij/plugins/.
@@ -626,7 +626,7 @@ starship() {
 local_binaries() {
     cd "$HOME" || echo "Failed: cd $HOME"
 
-    TEXLAB_VER="5.23.1"
+    TEXLAB_VER="5.24.0"
     wget https://github.com/latex-lsp/texlab/releases/download/v"${TEXLAB_VER}"/texlab-x86_64-linux.tar.gz
     tar xzf texlab-x86_64-linux.tar.gz
     mv texlab "$HOME/.local/bin"
@@ -645,34 +645,51 @@ local_binaries() {
     mv shfmt_v"${SHFMT_VER}"_linux_amd64 "${LOCAL_DIR}/bin/shfmt"
     chmod a+x "${LOCAL_DIR}/bin/shfmt"
 
-    DIFFT_VER="0.64.0"
+    DIFFT_VER="0.67.0"
     wget https://github.com/Wilfred/difftastic/releases/download/"${DIFFT_VER}"/difft-x86_64-unknown-linux-gnu.tar.gz
     tar xzf difft-x86_64-unknown-linux-gnu.tar.gz
     mv difft "$HOME/.local/bin/."
     rm difft-x86_64-unknown-linux-gnu.tar.gz
 
-    MK_VER="2024-12-18"
+    MK_VER="2025-12-13"
     wget https://github.com/artempyanykh/marksman/releases/download/"${MK_VER}"/marksman-linux-x64
     mv marksman-linux-x64 "$HOME/.local/bin/marksman"
     chmod a+x "$HOME/.local/bin/marksman"
 
-    EZA_VER="0.23.0"
+    EZA_VER="0.23.4"
     wget https://github.com/eza-community/eza/releases/download/v"${EZA_VER}"/eza_x86_64-unknown-linux-gnu.tar.gz
     tar xf eza_x86_64-unknown-linux-gnu.tar.gz
-    mv eza "$HOME"/.local/bin/eza
+    mv eza "$HOME"/.local/bin/.
     rm eza_x86_64-unknown-linux-gnu.tar.gz
+
+    LAZYGIT_VER="0.57.0"
+    wget https://github.com/jesseduffield/lazygit/releases/download/v"${LAZYGIT_VER}"/lazygit_${LAZYGIT_VER}_x86_64.tar.gz
+    tar xf lazygit_${LAZYGIT_VER}_x86_64.tar.gz
+    mv lazygit "$HOME"/.local/bin/.
+    rm lazygit_${LAZYGIT_VER}_x86_64.tar.gz
+
+    BTOP_VER="1.4.5"
+    wget https://github.com/aristocratos/btop/releases/download/v"${BTOP_VER}"/btop-x86_64-linux-musl.tbz
+    tar xf btop-x86_64-linux-musl.tbz
+    mv btop "$HOME"/.local/bin/.
+    rm btop-x86_64-linux-musl.tbz
 }
 
-# echo -e $"export LC_ALL=en_US.utf-8\nexport LANG=en_US.utf-8\nexport LANGUAGE=en_US.utf-8\nexport TERM=xterm-24bit" >>"$HOME/.bashrc"
-
-# cmdline=$"export LC_ALL=en_US.utf-8\nexport LANG=en_US.utf-8\nexport LANGUAGE=en_US.utf-8\nexport TERM=xterm-24bit\n"
-# printf "%s" "$cmdline" >>"$HOME/.bashrc"
-
+# I am not using Miniconda actively
 miniconda() {
     mkdir -p ~/miniconda3
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
     rm ~/miniconda3/miniconda.sh
+}
+
+topgrade() {
+    TOPGRADE_VER="16.7.0"
+    wget https://github.com/topgrade-rs/topgrade/releases/download/v${TOPGRADE_VER}/topgrade_${TOPGRADE_VER}-1_amd64.deb
+    sudo dpkg -i topgrade_${TOPGRADE_VER}-1_amd64.deb
+    sfname="$DOTFILES/topgrade.toml"
+    dfname="$CONFIG_DIR/topgrade.toml"
+    create_file_symlink "$sfname" "$dfname"
 }
 
 if [ ! -d "$GITHUB" ]; then
@@ -810,7 +827,7 @@ all)
     local_binaries
     zellij
     starship
-    miniconda
+    topgrade
 
     sudo apt autoremove -y
     sudo apt autoclean

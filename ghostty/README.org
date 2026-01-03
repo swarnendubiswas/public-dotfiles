@@ -1,3 +1,7 @@
+#+TITLE: Ghostty
+#+AUTHOR: Swarnendu Biswas
+#+EMAIL: swarnendu@cse.iitk.ac.in
+#+DATE: 24 Feb 2025
 #+STARTUP: showeverything noindent nonum align inlineimages showstars oddeven nohideblocks entitiespretty
 #+OPTIONS: author:t date:nil ^:{}
 

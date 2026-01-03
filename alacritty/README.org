@@ -1,5 +1,8 @@
-#+STARTUP: showeverything noindent nonum align inlineimages showstars oddeven nohideblocks entitiespretty
+#+TITLE: Customizing Alacritty
+#+AUTHOR: Swarnendu Biswas
+#+EMAIL: swarnendu@cse.iitk.ac.in
 #+OPTIONS: author:t date:nil ^:{}
+#+STARTUP: showeverything noindent nonum align inlineimages showstars odd nohideblocks entitiespretty
 
 * Alacritty
 
@@ -36,6 +39,18 @@ infocmp alacritty
 sudo tic -xe alacritty,alacritty-direct ./alacritty/alacritty.info
 #+end_src
 
+** "Terminal type alacritty is not defined."
+
+Use the following steps.
+
+#+begin_src shell
+# Local system where Alacritty is installed
+infocmp alacritty > alacritty.terminfo
+scp alacritty.terminfo gpu3:~
+ssh gpu3
+tic -x alacritty.terminfo
+#+end_src
+
 ** Themes
 
 #+begin_src shell
@@ -43,7 +58,7 @@ mkdir -p $XDG_CONFIG_HOME/alacritty/themes/
 git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 #+end_src
 
-** Alacritty + Tmux key integration
+** Keybindings
 
 =Alacritty= can send hex codes for shortcuts you define. So for example you can send a hex code for the shortcut "c-f v" that is: 0x06 0x76. There are many ways to find it out. One of them is the tool =xxd=. If you run ~xxd -psd~ and hit "c-f v" and then enter and finally ~c-c~ to exit, it outputs the following:
 

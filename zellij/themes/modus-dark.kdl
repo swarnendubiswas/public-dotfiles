@@ -1,0 +1,15 @@
+themes {
+    modus_dark {
+        fg "#ffffff"
+        bg "#7030af"
+        black "#131e1e"
+        red "#ff5f5f"
+        green "#7030af"
+        yellow "#fec43f"
+        blue "#3548cf"
+        magenta "#feacd0"
+        cyan "#00eff0"
+        white "#ffffff"
+        orange "#ff9580"
+    }
+}

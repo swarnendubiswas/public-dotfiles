@@ -1,0 +1,122 @@
+#+TITLE: Customizing Tmux
+#+AUTHOR: Swarnendu Biswas
+#+EMAIL: swarnendu_cse@yahoo.com
+#+STARTUP: showeverything nofold indent nonum align inlineimages showstars oddeven nohideblocks latexpreview entitiespretty
+#+OPTIONS: author:t date:t ^:{}
+
+* Customizing Tmux
+
+~Tmux~ is a terminal multiplexer like ~GNU Screen~ or ~Zellij~ that lets you run
+multiple terminal sessions within a single terminal but that can remain active
+even if you end your terminal application or connection.
+
+#+begin_src shell
+sudo apt install -y libevent-dev bison entr ncurses-term xsel xclip tmux 
+
+# The version of tmux in the package distribution is usually outdated. The
+# alternative is to build from the source.
+TMUX_VER=3.6a
+wget https://github.com/tmux/tmux/releases/download/${TMUX_VER}/tmux-${TMUX_VER}.tar.gz
+tar xf tmux-${TMUX_VER}.tar.gz
+cd tmux-${TMUX_VER} || exit
+
+./configure --prefix="$HOME/.local/"
+make
+make install
+rm tmux-${TMUX_VER}.tar.gz
+#+end_src
+
+See server options with ~tmux show -s~, global options with ~tmux show -g~, global
+window options with ~tmux show -wg~, and show an individual option value with ~tmux
+show -g <option-name>~.
+
+** Plugins
+
+Enable plugins from [[https://github.com/tmux-plugins/][tmux-plugins]]. Clone TPM, and then run ~<prefix> I~. Use
+~<prefix> U~ to update the plugins.
+
+#+begin_src shell
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+#+end_src
+
+** Shortcuts
+
+I use ~C-]~ as the prefix because it is not used in Terminal Emacs. I prefer
+having the same shortcuts for both Zellij and Tmux.
+
+*** General
+
+- Enter command mode, open the prompt: ~<prefix> :~
+- List keybindings: ~<prefix> ?~
+- Describe a single key: ~<prefix> /~  
+- Session and window preview: ~<prefix> w~
+  
+- Show options: ~tmux show-options -g~
+- Find status line settings: ~tmux show-options -g | grep status~ or ~tmux show-options -g status-left~
+
+*** Session
+
+- Start and attach to a new session: ~tmux~, ~tmux new~, ~tmux new-session~, or ~:new~
+- Start and attach to a new session with name: ~tmux new -s <name>~ or ~:new -s <name>~
+- Attach to a previously-opened session: ~tmux attach-session~ or ~tmux a~
+- Attach to a previously-opened named session: ~tmux attach-session -t <name>~ or ~tmux a -t <name>~
+- Attach to an existing Tmux session or create a new session if none exists: ~tmux new -As0~
+- Detach from the session: ~<prefix> d~
+- Detach from the chosen session: ~<prefix> D~
+- See (list) all sessions: ~tmux list-sessions~ or ~tmux ls~
+- See (list) clients: ~tmux list-clients~
+- Kill all open sessions including server: ~tmux kill-server~
+- Kill specific session: ~tmux kill-session -t <targetSession>~ or ~tmux kill-ses -t <targetSession>~
+- Close all other sessions except the current: ~tmux kill-session -a~
+- Rename an existing session: ~<prefix> $~ or ~rename-session -t <old> <new>~
+- Move to the previous session: ~<prefix> (~
+- Move to the next session: ~<prefix> )~
+- Session and window preview: ~<prefix> w~
+- Show all sessions: ~<prefix> s~
+  
+*** Window
+
+- Create a new window: ~<prefix> c~
+- Rename window: ~<prefix> ,~
+- Previous window: ~<prefix> p~
+- Next window: ~<prefix> n~
+- Select window by number: ~<prefix> [0..9]~
+- Prompt for a window index (useful when there are more than ten panes): ~<prefix> '~ 
+- Kill window: ~<prefix> &~
+- List windows: ~<prefix> w~
+- Bring up the last selected window: ~<prefix> l~
+- Search for window name: ~<prefix> f~
+- Kill all windows except the current: ~:kill-window -a~
+- Toggle last active window: ~<prefix> |~
+
+*** Pane
+
+- Toggle last active pane: ~<prefix> ;~
+- Show pane numbers: ~<prefix> q~
+- Convert pane into a window: ~<prefix> !~
+- Split the current pane with a horizontal line: ~<prefix> %~
+- Split the current pane with a vertical line: ~<prefix> "~
+- Move the current pane left: ~<prefix> {~
+- Move the current pane right: ~<prefix> }~
+- Switch to next pane: ~<prefix> o~
+- Select pane by number: ~<prefix> 0...9~
+- Kill pane: ~<prefix> x~
+
+*** Copy mode
+
+- Enter copy mode: ~<prefix> [~
+- Search forward: ~/~
+- Search backward: ~?~
+- Next keyword occurrence: ~n~
+- Previous keyword occurrence: ~N~
+- Quit copy mode: ~q~
+- Go to top line: ~g~
+- Go to bottom line: ~G~
+- Move cursor forward one word at a time: ~w~
+- Move cursor backward one word at a time: ~b~
+
+*** Miscellaneous
+
+- Zoom pane: ~<prefix> z~
+- Scroll back mode: ~<prefix> [~ + up/down arrow keys
+

@@ -2,9 +2,12 @@
 // emulators are Alacritty and Ghostty. The default Zellij binary provides most
 // features that I need (including session restoration). I do not want to add
 // flashy plugins without having a real need for it.
-keybinds clear-defaults=true {
-    // Conflicts with Emacs, so we use "Ctrl ]" which is difficult to bind in
-    // terminal Emacs
+keybinds {
+    // The default keybinding to switch modes conflicts with Emacs, so we use
+    // either "Ctrl b" or "Ctrl ]". The latter is difficult to bind in terminal
+    // Emacs and so is a safe choice for Zellij. "Ctrl ]" always either enters
+    // Locked or exits to Locked mode. There are explicit "Ctrl"-based entry
+    // points for each mode, and "Esc" exits to Normal.
     unbind "Ctrl g"
     locked {
         bind "Ctrl ]" {
@@ -12,12 +15,14 @@ keybinds clear-defaults=true {
         }
     }
     pane {
-        bind "tab" {
+        bind "Tab" {
             SwitchFocus
+        }
+        bind "Shift Tab" {
+            FocusPreviousPane
         }
         bind "x" {
             CloseFocus
-            SwitchToMode "Locked"
         }
         bind "r" {
             SwitchToMode "RenamePane"
@@ -27,6 +32,9 @@ keybinds clear-defaults=true {
     move {
         bind "Tab" {
             MovePane
+        }
+        bind "Shift Tab" {
+            MovePaneBackwards
         }
         bind "Left" {
             MovePane "Left"
@@ -48,56 +56,70 @@ keybinds clear-defaults=true {
         }
         bind "n" {
             NewTab
-            SwitchToMode "Locked"
         }
         bind "x" {
             CloseTab
-            SwitchToMode "Locked"
+        }
+        bind "[" {
+            BreakPaneLeft
         }
         bind "]" {
-            BreakPaneLeft
-            SwitchToMode "Locked"
+            BreakPaneRight
         }
         bind "1" {
             GoToTab 1
-            SwitchToMode "Locked"
         }
         bind "2" {
             GoToTab 2
-            SwitchToMode "Locked"
         }
         bind "3" {
             GoToTab 3
-            SwitchToMode "Locked"
         }
         bind "4" {
             GoToTab 4
-            SwitchToMode "Locked"
         }
         bind "5" {
             GoToTab 5
-            SwitchToMode "Locked"
         }
-        // Having six tabs open seems a reasonable upper limit
         bind "6" {
             GoToTab 6
-            SwitchToMode "Locked"
         }
-        bind "tab" {
+        bind "7" {
+            GoToTab 7
+        }
+        bind "8" {
+            GoToTab 8
+        }
+        bind "9" {
+            GoToTab 9
+        }
+        bind "Tab" {
             ToggleTab
+        }
+        bind "s" {
+            ToggleActiveSyncTab
         }
     }
     scroll {
+        bind "Esc" {
+            SwitchToMode "Normal"
+        }
+        bind "e" {
+            EditScrollback
+        }
         bind "s" {
             SwitchToMode "EnterSearch"
             SearchInput 0
         }
     }
     search {
-        bind "n" {
+        bind "Esc" {
+            SwitchToMode "Normal"
+        }
+        bind "Ctrl s" "n" {
             Search "Down"
         }
-        bind "p" {
+        bind "Ctrl r" "p" {
             Search "Up"
         }
         bind "c" {
@@ -139,14 +161,12 @@ keybinds clear-defaults=true {
                 floating true
                 move_to_focused_tab true
             }
-            SwitchToMode "Locked"
         }
         bind "p" {
             LaunchOrFocusPlugin "plugin-manager" {
                 floating true
                 move_to_focused_tab true
             }
-            SwitchToMode "Locked"
         }
     }
     shared {
@@ -158,9 +178,6 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
-        bind "Ctrl ]" {
-            SwitchToMode "Locked"
-        }
         bind "Alt n" {
             NewPane
         }
@@ -178,11 +195,13 @@ keybinds clear-defaults=true {
         bind "Ctrl Shift ." {
             MoveTab "Right"
         }
+        // Move focus left if pane exists, otherwise go to previous tab
         bind "Alt Left" {
-            MoveFocus "Left"
+            MoveFocusOrTab "Left"
         }
+        // Move focus right if pane exists, otherwise go to next tab
         bind "Alt Right" {
-            MoveFocus "Right"
+            MoveFocusOrTab "Right"
         }
         bind "Alt Down" {
             MoveFocus "Down"
@@ -190,12 +209,20 @@ keybinds clear-defaults=true {
         bind "Alt Up" {
             MoveFocus "Up"
         }
+        // Hide all UI elements except the active pane
+        bind "Alt u" "Super enter" {
+            ToggleFocusFullscreen
+        }
+        bind "Alt f" {
+            ToggleFloatingPanes
+        }
+        bind "Alt i" {
+            TogglePaneEmbedOrFloating
+        }
         bind "Ctrl q" {
             LaunchOrFocusPlugin "zj-quit" {
                 floating true
             }
-            // Switch to locked mode so that keypresses are accepted
-            SwitchToMode "Locked"
         }
         // Navigate between Zellij panes easily
         bind "Alt p" {
@@ -203,14 +230,35 @@ keybinds clear-defaults=true {
                 floating true
                 move_to_focused_tab true
             }
-            SwitchToMode "Locked"
         }
-        // Jump among tabs with searching
+        // Jump among tabs with searching. This may potentially be useful if
+        // there are many tabs open and they overflow the screen.
         bind "Alt b" {
             LaunchOrFocusPlugin "zj-buffers" {
                 floating true
             }
-            SwitchToMode "Locked"
+        }
+        // https://tesar.tech/blog/2025-11-13_run_a_command_in_new_zellij_tab
+        // Run commands in a new pane
+        // bind "Ctrl z" {
+        //     Run "lazygit" {
+        //     }
+        // }
+        // Run commands in a new tab
+        bind "Alt e" {
+            NewTab {
+                layout "emacs"
+            }
+        }
+        bind "Alt g" {
+            NewTab {
+                layout "lazygit"
+            }
+        }
+        bind "Alt l" {
+            LaunchOrFocusPlugin "zellij:layout-picker" {
+                floating true
+            }
         }
     }
     shared_except "pane" "locked" {
@@ -243,13 +291,13 @@ keybinds clear-defaults=true {
             SwitchToMode "Move"
         }
     }
-    shared_except "locked" "search" "scroll" "renametab" "renamepane" "entersearch" {
-        bind "Esc" {
+    shared_among "normal" "search" "scroll" "pane" "tab" "move" "session" "renametab" "renamepane" "entersearch" {
+        bind "Ctrl ]" {
             SwitchToMode "Locked"
         }
     }
-    shared_among "pane" "move" "tab" "search" "scroll" "renametab" "renamepane" "session" {
-        bind "Ctrl n" {
+    shared_among "pane" "tab" "move" "session" {
+        bind "Esc" {
             SwitchToMode "Normal"
         }
     }
@@ -280,19 +328,13 @@ keybinds clear-defaults=true {
             HalfPageScrollUp
         }
     }
-    shared_among "search" "scroll" {
-        bind "Esc" {
-            ScrollToBottom
-            // I want to type something more often than not, so it makes sense
-            // to switch to Locked mode instead of Normal.
-            SwitchToMode "Locked"
-        }
-    }
 }
 // Plugin aliases - can be used to change the implementation of Zellij
 // changing these requires a restart to take effect
 plugins {
-    compact-bar location="zellij:compact-bar"
+    compact-bar location="zellij:compact-bar" {
+        tooltip "F12"
+    }
     session-manager location="zellij:session-manager"
     plugin-manager location="zellij:plugin-manager"
     // Confirm before quitting
@@ -304,14 +346,19 @@ plugins {
     zj-buffers location="file:$HOME/.local/share/zellij/plugins/zbuffers.wasm"
     // Navigate between Zellij panes easily
     zj-pane location="file:$HOME/.local/share/zellij/plugins/zj-pane.wasm"
+    // Customize the status bar
+    zj-status location="file:$HOME/.local/share/zellij/plugins/zjstatus.wasm"
 }
 // Plugins to load in the background when a new session starts
 load_plugins {
-
+    // Force load the compact-bar plugin which allows hover tooltips
+    compact-bar
 }
+// I overwrite the status bar
+simplified_ui true
 default_shell "fish"
-// theme "catppuccin-mocha"
-default_layout "compact-many-tabs"
+theme "dracula"
+default_layout "rounded-dracula"
 // Allows forwarding the key presses to terminal applications like Emacs.
 default_mode "locked"
 // Try a layout with "zellij --layout /path/layout".
@@ -321,11 +368,13 @@ show_release_notes false
 // When a session name is provided, attach to the named session if it is already
 // running, create otherwise.
 attach_to_session true
+web_server false
 show_startup_tips false
 ui {
     pane_frames {
+        // Looks nicer
         rounded_corners true
+        // It is useful to see the session name
         hide_session_name false
     }
 }
-

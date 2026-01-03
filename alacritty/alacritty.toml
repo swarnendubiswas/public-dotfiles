@@ -1,46 +1,66 @@
-# Only settings that modify the default are listed
+# Only settings that modify the default are listed.
 
-# Font and theme settings are in private.toml
-general.import = ["./private.toml"]
+# Theme and font size settings are in "private.toml" because they may vary
+# across setups and we do not want to commit them.
 
-[colors]
-draw_bold_text_with_bright_colors = true
+[general]
+import = ["./private.toml"]
 
 [env]
 TERM = "alacritty"
 
-[font.normal]
-family = "JetBrainsMonoNerdFontMono"
+[window]
+opacity = 0.99
+# We use fullscreen mode to maximize vertical space. However, having the title
+# bar to drag is useful when we use two monitors. Use "Ctrl+Shift+F11" to go
+# fullscreen.
+decorations = "None"
+startup_mode = "Maximized"
+# Blur only works on Kwin wayland, check with "echo $XDG_SESSION_TYPE". With
+# X11, we need blurring support from KDE.
+blur = false
+# Add horizontal padding so that the terminal screen is not visible behind
+# windows of other applications
+padding = { x = 2, y = 2 }
+dynamic_padding = true
 
-[mouse]
-hide_when_typing = true
+# We include a default definition of the following settings. These settings can
+# be overridden in the "private.toml" file.
+[font]
+normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
+bold = { family = "IosevkaTerm Nerd Font Mono", style = "Bold" }
+italic = { family = "IosevkaTerm Nerd Font Mono", style = "Italic" }
+size = 22.0
+
+[colors]
+draw_bold_text_with_bright_colors = true
+transparent_background_colors = true
 
 [selection]
 save_to_clipboard = true
 
-[terminal.shell]
-program = "fish"
-args = ["-l", "-i"]
+[mouse]
+hide_when_typing = true
+
+[terminal]
+# shell = { program = "tmux", args = ["new-session", "-A", "-s", "#{host}"] }
+
+shell = { program = "fish" }
 # args = ["-l", "-c", "tmux new -As0"]
+# args = ["-l", "-i"]
 # args = ["-l", "-c", "zellij a --create $USER@$(hostname)"]
 
-[window]
-opacity = 0.90
-# Having the title bar to drag is useful when we use two monitors
-# decorations = "None"
-startup_mode = "Maximized"
-# Blur only works on kwin wayland
-blur = false
-
-# Keybindings are customized for terminal Emacs.
+# Keybindings are customized for terminal Emacs. Control is passed to the
+# terminal app, Control+Shift is for terminal UI, Super is for terminal-only
+# (tabs, windows). Avoid binding Alt.
 [keyboard]
 bindings = [
     { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
     { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" },
-    { key = "W", mods = "Control|Shift", action = "Quit" },
-    { key = "Q", mods = "Control|Shift", action = "Quit" },
-    # Let Zellij handle this for confirmation
+    # { key = "W", mods = "Control|Shift", action = "Quit" },
+    # { key = "Q", mods = "Control|Shift", action = "Quit" },
     # { key = "Q", mods = "Control", action = "Quit" },
+    { key = "Q", mods = "Control", action = "None" },
     { key = "B", mods = "Control|Shift", action = "SearchBackward", mode = "~Search" },
     { key = "F", mods = "Control|Shift", action = "SearchForward", mode = "~Search" },
     { key = "C", mods = "Control|Shift", action = "Copy" },
@@ -55,8 +75,17 @@ bindings = [
     { key = "PageDown", mods = "Control|Shift", action = "ScrollPageDown" },
     { key = "PageUp", mods = "Shift", mode = "~Alt", action = "ScrollHalfPageUp" },
     { key = "PageDown", mods = "Shift", mode = "~Alt", action = "ScrollHalfPageDown" },
-    { key = "Equals", mods = "Control", action = "ReceiveChar" },
     { key = "Plus", mods = "Control|Shift", action = "IncreaseFontSize" },
-    { key = "_", mods = "Control|Shift", action = "DecreaseFontSize" },
-    { key = ")", mods = "Control|Shift", action = "ResetFontSize" },
+    { key = "-", mods = "Control|Shift", action = "DecreaseFontSize" },
+    { key = "Key0", mods = "Control|Shift", action = "ResetFontSize" },
+    { key = "Backspace", mods = "Control|Shift", chars = "\u001b[127;6u" },
+    { key = "Equals", mods = "Control", chars = "\u001b[61;5u" },
+    { key = "Slash", mods = "Control", chars = "\u001b[47;5u" },
+    { key = "'", mods = "Control", chars = "\u001b[39;5u" },
+    { key = "Comma", mods = "Control", chars = "\u001b[44;5u" },
+    { key = "Period", mods = "Control", chars = "\u001b[46;5u" },
+    { key = "Semicolon", mods = "Control", chars = "\u001b[59;5u" },
+    { key = "`", mods = "Control", chars = "\u001b[96;5u" },
+    { key = "Comma", mods = "Control|Shift", chars = "\u001b[44;6u" },
+    { key = "Period", mods = "Control|Shift", chars = "\u001b[46;6u" },
 ]

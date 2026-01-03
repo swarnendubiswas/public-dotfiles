@@ -1,4 +1,6 @@
+#+TITLE: Zellij README
 #+AUTHOR: Swarnendu Biswas
+#+EMAIL: swarnendu@cse.iitk.ac.in
 #+STARTUP: showeverything noindent nonum align inlineimages showstars odd nohideblocks entitiespretty
 
 * Zellij
@@ -10,9 +12,10 @@ Bash: ~zellij attach --create $USER@$HOSTNAME~
 
 Another option is to use ~zellij -s $hostname attach~.
 
+- Connect to the most recently-used setup using ~zellij a $(zellij ls -s | tail -1)~
 - Disable session resurrection: Set ~session_serialization false~ and delete ~~/.cache/zellij~.
 - Show current layout: ~zellij action dump-layout~
-- Show current layout: ~zellij setup --dump-config~
+- ~zellij setup --dump-config~
 - ~zellij setup --clean~  
 
 

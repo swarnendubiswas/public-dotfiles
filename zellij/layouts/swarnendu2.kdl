@@ -1,0 +1,122 @@
+layout {
+  pane
+  // Disable border around the status bar
+  pane size=1 borderless=true {
+    plugin location="zj-status" {
+      color_rosewater "#f5e0dc"
+      color_flamingo "#f2cdcd"
+      color_pink "#f5c2e7"
+      color_mauve "#cba6f7"
+      color_red "#f38ba8"
+      color_maroon "#eba0ac"
+      color_peach "#fab387"
+      color_yellow "#f9e2af"
+      color_green "#a6e3a1"
+      color_teal "#94e2d5"
+      color_sky "#89dceb"
+      color_sapphire "#74c7ec"
+      color_blue "#89b4fa"
+      color_lavender "#b4befe"
+      color_magenta "#B48EAD"
+      color_cyan "#88C0D0"
+      color_white "#E5E9F0"
+      color_orange "#D08770"
+
+      color_text "#cdd6f4"
+      color_subtext1 "#bac2de"
+      color_subtext0 "#a6adc8"
+      color_overlay2 "#9399b2"
+      color_overlay1 "#7f849c"
+      color_overlay0 "#6c7086"
+      color_surface2 "#585b70"
+      color_surface1 "#45475a"
+      color_surface0 "#313244"
+      color_base "#1e1e2e"
+      color_mantle "#181825"
+      color_crust "#11111b"
+
+      format_left   "#[bg=$surface0,fg=$sapphire] {command_host_os_icon} #[bg=$sapphire,fg=$crust]  {session} #[bg=$surface0]{mode}#[bg=$surface0] {tabs}"
+      format_center "{notifications}"
+      // {command_user}, {swap_layout}
+      format_right  "#[bg=$surface0,fg=$flamingo] {command_git_branch_command}  #[fg=#424554,bg=#181825] | {datetime}"
+      format_space  "#[bg=$surface0]"
+      format_hide_on_overlength "true"
+      format_precedence "lrc"
+
+      border_enabled  "true"
+      border_char     "─"
+      border_format   "#[bg=$surface0]{char}"
+      border_position "top"
+
+      // Explicit frame is a nice visual demarcator
+      hide_frame_for_single_pane "false"
+      
+      mode_normal        "#[bg=$green,fg=$crust] NORMAL "
+      mode_tmux          "#[bg=$mauve,fg=$crust] TMUX "
+      mode_locked        "#[bg=$red,fg=$crust]  LOCKED "
+      mode_pane          "#[bg=$teal,fg=$crust] PANE "
+      mode_tab           "#[bg=$teal,fg=$crust] TAB "
+      mode_scroll        "#[bg=$flamingo,fg=$crust] SCROLL "
+      mode_enter_search  "#[bg=$flamingo,fg=$crust] ENTER-SEARCH "
+      mode_search        "#[bg=$flamingo,fg=$crust] SEARCH "
+      mode_resize        "#[bg=$yellow,fg=$crust] RESIZE "
+      mode_rename_tab    "#[bg=$yellow,fg=$crust] RENAME-TAB "
+      mode_rename_pane   "#[bg=$yellow,fg=$crust] RENAME-PANE "
+      mode_move          "#[bg=$yellow,fg=$crust] MOVE "
+      mode_session       "#[bg=$pink,fg=$crust] SESSION "
+      mode_prompt        "#[bg=$pink,fg=$crust] PROMPT "
+
+      mode_default_to_mode "locked"
+
+      tab_normal              "#[bg=$surface0,fg=$blue]#[bg=$blue,fg=$crust,bold] {index} #[bg=$surface1,fg=$blue,bold] {name}{floating_indicator} #[bg=$surface0,fg=$surface1]"
+      tab_normal_fullscreen   "#[bg=$surface0,fg=$blue]#[bg=$blue,fg=$crust,bold] {index} #[bg=$surface1,fg=$blue,bold] {name}{fullscreen_indicator}#[bg=$surface0,fg=$surface1]"
+      tab_normal_sync         "#[bg=$surface0,fg=$blue]#[bg=$blue,fg=$crust,bold] {index} #[bg=$surface1,fg=$blue,bold] {name}{sync_indicator}#[bg=$surface0,fg=$surface1]"
+
+      tab_active              "#[bg=$surface0,fg=$peach]#[bg=$peach,fg=$crust,bold] {index} #[bg=$surface1,fg=$peach,bold] {name}{floating_indicator} #[bg=$surface0,fg=$surface1]"
+      tab_active_fullscreen   "#[bg=$surface0,fg=$peach]#[bg=$peach,fg=$crust,bold] {index} #[bg=$surface1,fg=$peach,bold] {name}{fullscreen_indicator} #[bg=$surface0,fg=$surface1]"
+      tab_active_sync         "#[bg=$surface0,fg=$peach]#[bg=$peach,fg=$crust,bold] {index} #[bg=$surface1,fg=$peach,bold] {name}{sync_indicator}#[bg=$surface0,fg=$surface1]"
+
+      tab_separator           "#[bg=$surface0] "
+
+      // tab_sync_indicator       "󰓦 "
+      // tab_fullscreen_indicator "󱟱  "
+      // tab_floating_indicator   "󰉈 "
+      
+      // tab_fullscreen_indicator "□ "
+      // tab_sync_indicator       "  "
+      // tab_floating_indicator   "󰉈 "
+
+      tab_sync_indicator       " "
+      tab_fullscreen_indicator " 󰊓"
+      tab_floating_indicator   " 󰹙"
+
+      notification_format_unread "#[bg=surface0,fg=$yellow]#[bg=$yellow,fg=$crust] #[bg=$surface1,fg=$yellow] {message}#[bg=$surface0,fg=$yellow]"
+      notification_format_no_notifications ""
+      notification_show_interval "10"
+
+      command_host_command    "uname -n"
+      command_host_format     "{stdout}"
+      command_host_interval   "0"
+      command_host_rendermode "static"
+
+      command_user_command    "whoami"
+      command_user_format     "{stdout}"
+      command_user_interval   "10"
+      command_user_rendermode "static"
+          
+      command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
+      command_git_branch_format      "#[fg=blue] {stdout} "
+      command_git_branch_interval    "10"
+      command_git_branch_rendermode  "static"
+
+      command_host_os_icon_command "sh -c \"echo $(uname -s | grep -qi 'darwin' && echo '󰀵')$(uname -s | grep -qi 'linux' && echo '')$(uname -s | grep -qi 'nt' && echo '󰖳')\""
+      command_host_os_icon_format "{stdout}"
+      command_host_os_icon_interval "0"
+      command_host_os_icon_rendermode "static"
+
+      datetime          "{format}"
+      datetime_format   "%d-%m-%Y 󰅐 %H:%M"
+      datetime_timezone "Asia/Kolkata" 
+    }
+  }
+}

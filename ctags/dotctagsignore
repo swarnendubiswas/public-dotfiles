@@ -1,0 +1,27 @@
+# Ignore version control directories
+.git/
+.hg/
+.svn/
+
+# Ignore build directories
+build/
+dist/
+node_modules/
+
+# Ignore temporary files
+*.tmp
+*.log
+*.swp
+
+# Ignore specific file types
+*.min.js
+*.class
+*.o
+*.so1m
+*.pyc
+*.elc
+TAGS
+.tags
+GTAGS
+GRTAGS
+GPATH

@@ -1,0 +1,133 @@
+// https://github.com/protesilaos/modus-themes
+themes {
+    modus-vivendi {// Base colors
+        fg 255 255 255
+        bg 0 0 0
+        black 0 0 0
+        red 255 95 89
+        green 68 188 68
+        yellow 208 188 0
+        blue 47 175 255
+        magenta 254 172 208
+        cyan 0 211 208
+        white 152 152 152
+        orange 254 196 63
+        // UI elements mapping
+        text_unselected {
+            base 255 255 255
+            background 0 0 0
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 68 188 68
+            emphasis_3 254 172 208
+        }
+        text_selected {
+            base 255 255 255
+            background 90 90 90
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 68 188 68
+            emphasis_3 254 172 208
+        }
+        ribbon_selected {
+            base 255 255 255
+            background 80 80 80
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 208 188 0
+            emphasis_3 254 172 208
+        }
+        ribbon_unselected {
+            base 150 150 150
+            background 45 45 45
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 68 188 68
+            emphasis_3 254 172 208
+        }
+        table_title {
+            base 68 188 68
+            background 0 0 0
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 208 188 0
+            emphasis_3 254 172 208
+        }
+        table_cell_selected {// Same as text_selected
+            base 255 255 255
+            background 90 90 90
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 68 188 68
+            emphasis_3 254 172 208
+        }
+        table_cell_unselected {// Same as text_unselected
+            base 255 255 255
+            background 0 0 0
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 68 188 68
+            emphasis_3 254 172 208
+        }
+        list_selected {// Same as text_selected
+            base 255 255 255
+            background 90 90 90
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 68 188 68
+            emphasis_3 254 172 208
+        }
+        list_unselected {// Same as text_unselected
+            base 255 255 255
+            background 0 0 0
+            emphasis_0 255 95 89
+            emphasis_1 47 175 255
+            emphasis_2 68 188 68
+            emphasis_3 254 172 208
+        }
+        frame_selected {// Use cooler blue for active frame
+            base 0 188 255
+            background 0 0 0
+            emphasis_0 255 95 89
+            emphasis_1 68 188 68
+            emphasis_2 208 188 0
+            emphasis_3 254 172 208
+        }
+        frame_highlight {// Use warmer yellow for highlight/action
+            base 254 196 63
+            background 0 0 0
+            emphasis_0 254 196 63
+            emphasis_1 254 196 63
+            emphasis_2 254 196 63
+            emphasis_3 254 196 63
+        }
+        exit_code_success {
+            base 68 188 68
+            background 0 0 0
+            emphasis_0 47 175 255
+            emphasis_1 254 172 208
+            emphasis_2 0 211 208
+            emphasis_3 208 188 0
+        }
+        exit_code_error {
+            base 255 95 89
+            background 0 0 0
+            emphasis_0 47 175 255
+            emphasis_1 254 172 208
+            emphasis_2 0 211 208
+            emphasis_3 208 188 0
+        }
+        multiplayer_user_colors {// Cycle through distinct accents
+            player_1 255 95 89
+            player_2 68 188 68
+            player_3 208 188 0
+            player_4 47 175 255
+            player_5 254 172 208
+            player_6 0 211 208
+            player_7 219 123 95
+            player_8 144 153 217
+            player_9 207 127 167
+            player_10 156 189 111
+        }
+    }
+}

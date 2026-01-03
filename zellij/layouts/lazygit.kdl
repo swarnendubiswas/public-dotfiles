@@ -1,0 +1,12 @@
+// https://tesar.tech/blog/2025-11-13_run_a_command_in_new_zellij_tab
+layout {
+    default_tab_template {
+        children
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+    }
+    tab name="LazyGit" {
+        pane command="lazygit" close_on_exit=true
+    }
+}

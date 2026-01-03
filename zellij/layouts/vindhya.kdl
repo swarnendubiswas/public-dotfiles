@@ -1,0 +1,22 @@
+layout {
+    tab name="Vindhya" {
+        pane {
+            command "ssh" 
+            args "vindhya.cse.iitk.ac.in"
+            
+        }
+    }
+    tab name="Vindhya" {
+        pane {
+            command "ssh" 
+            args "vindhya.cse.iitk.ac.in"
+            
+        }
+    }
+    tab name="Vindhya" {
+        pane {
+            command "ssh" 
+            args "vindhya.cse.iitk.ac.in"            
+        }
+    }
+}

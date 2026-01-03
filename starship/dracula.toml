@@ -2,8 +2,8 @@
 
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
-# Disable the blank line at the start of the prompt
-add_newline = false
+# Use the color palette
+palette = "dracula"
 right_format = '$cmd_duration$status'
 command_timeout = 2000
 
@@ -36,10 +36,6 @@ style = "bold green"
 
 [character]
 disabled = false
-# success_symbol = '[➜](bold green) '
-# error_symbol = '[✗](bold red) '
-# success_symbol = '[](bold fg:color_green)'
-# error_symbol = '[](bold fg:color_red)'
 
 [cmd_duration]
 show_milliseconds = false
@@ -69,7 +65,6 @@ disabled = true
 
 [os]
 disabled = false
-style = "bg:subtext1 fg:base"
 
 [os.symbols]
 Arch = '󰣇 '
@@ -80,6 +75,20 @@ openSUSE = " "
 Ubuntu = " "
 Windows = " "
 Unknown = '󰠥 '
+
+# Define Dracula color palette
+[palettes.dracula]
+background = "#282a36"
+current_line = "#44475a"
+foreground = "#f8f8f2"
+comment = "#6272a4"
+cyan = "#8be9fd"
+green = "#50fa7b"
+orange = "#ffb86c"
+pink = "#ff79c6"
+purple = "#bd93f9"
+red = "#ff5555"
+yellow = "#f1fa8c"
 
 [shell]
 disabled = false
